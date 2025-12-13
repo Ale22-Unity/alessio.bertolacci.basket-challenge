@@ -1,11 +1,13 @@
 using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameClient : MonoBehaviour
 {
     public static GameClient Client;
 
+    [SerializeField] private string GameSceneName = "GameScene";
     [SerializeField] private Transform uiRoot;
     [SerializeField] private MainMenuUI mainMenuPrefab;
     [SerializeField] private GameHUD gameHUDPrefab;
@@ -45,6 +47,7 @@ public class GameClient : MonoBehaviour
     {
         await CloseMenu(MenuID.Reward);
         await CloseMenu(MenuID.MainMenu);
+        await SceneManager.LoadSceneAsync(GameSceneName, LoadSceneMode.Additive);
         GameHUD gameHUDInstance = Instantiate(gameHUDPrefab, uiRoot);
         gameHUDInstance.Setup(new GameHUDData());
         activeMenuItems.Add(gameHUDInstance);
@@ -58,6 +61,7 @@ public class GameClient : MonoBehaviour
     private async UniTask OnGameEnded(GameEndedEvent e)
     {
         await CloseMenu(MenuID.HUD);
+        await SceneManager.UnloadSceneAsync(GameSceneName);
         RewardMenuUI rewardMenuInstance = Instantiate(rewardMenuPrefab, uiRoot);
         rewardMenuInstance.Setup(new RewardMenuUIData(StartGame, BackToMainMenu, QuitGame));
         activeMenuItems.Add(rewardMenuInstance);

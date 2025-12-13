@@ -208,13 +208,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: 0.17364816, y: 0, z: 0, w: 0.9848078}
+  m_LocalPosition: {x: 0, y: 5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 20, y: 0, z: 0}
 --- !u!114 &330585547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -303,6 +303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18134cfb81617c749bad0f55d5b1bef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameSceneName: GameScene
   uiRoot: {fileID: 691141175}
   mainMenuPrefab: {fileID: 3994076296211073896, guid: 04c667201d3cce84db45935a26a24a2a,
     type: 3}
@@ -459,6 +460,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15a49458e6f543d43aad804ed292eb12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _maxSwipeDurationSec: 3
+  _screenMutiplier: 0.7
 --- !u!4 &482509868
 Transform:
   m_ObjectHideFlags: 0
