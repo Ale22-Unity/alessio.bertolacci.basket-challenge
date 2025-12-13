@@ -1,0 +1,55 @@
+{
+    "version": 1,
+    "name": "GameInputs",
+    "maps": [
+        {
+            "name": "Touch",
+            "id": "16be2e53-644f-4507-a17b-591ee57c061a",
+            "actions": [
+                {
+                    "name": "ContactPosition",
+                    "type": "PassThrough",
+                    "id": "b0ccfa1a-eba9-4966-b787-5abe72dbd3db",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "PrimaryContact",
+                    "type": "Button",
+                    "id": "a9e267c9-dfb6-42a7-90e7-1de4d51a17bd",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "8832797a-125b-4268-bac9-98a756ae350c",
+                    "path": "<Touchscreen>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ContactPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "263d2f34-4504-4721-9737-5da0da37816d",
+                    "path": "<Touchscreen>/primaryTouch/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PrimaryContact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
