@@ -9,6 +9,12 @@ public class Thrower : MonoBehaviour
     [SerializeField] private Transform _target;
     [SerializeField] private Transform _throwPos;
     [SerializeField] private Ball _ball;
+    [Space]
+    [SerializeField] private int _simulatedBounces = 3;
+    [SerializeField] private float _simulatedTimeStep = 0.05f;
+    [SerializeField] private float _maxSimulatedSteps = 1000;
+    [SerializeField] private LayerMask _simulatedCollisionMask;
+    [SerializeField] private float _simulatedElasticlty = 0.7f;
 
     private void Awake()
     {
@@ -70,8 +76,40 @@ public class Thrower : MonoBehaviour
 
     private void On(ThrowBallTestEvent e)
     {
-        CalculatePathWithFixedHeight(_ball.transform, _target, deltaH, out Vector3 dir, out float v0, out float time);
+        CalculatePathWithFixedHeight(_throwPos, _target, deltaH, out Vector3 dir, out float v0, out float time);
         Debug.Log($"Direction is {dir}");
         _ball.Throw(dir, v0, time);
+    }
+
+    public void SimulateThrow()
+    {
+        CalculatePathWithFixedHeight(_throwPos, _target, deltaH, out Vector3 dir, out float v0, out float time);
+        Vector3 stepPos = _throwPos.position;
+        for(int i = 0; i < _maxSimulatedSteps; i++)
+        {
+            Vector3 stepVelocity = dir + Physics.gravity * _simulatedTimeStep;
+            Vector3 deltaPos = (dir * _simulatedTimeStep) + (0.5f * Physics.gravity * Mathf.Pow(_simulatedTimeStep, 2));
+            bool bounce = Physics.SphereCast(stepPos, _ball.Radius, dir, out RaycastHit hit, deltaPos.magnitude, _simulatedCollisionMask);
+            if (bounce)
+            {
+                Vector3 ballPosAtImpact = stepPos + (stepVelocity.normalized * hit.distance);
+                Debug.DrawLine(stepPos, ballPosAtImpact, Color.blue, 10);
+                stepPos = ballPosAtImpact;
+                float timeOfImpact = _simulatedTimeStep * (hit.distance / deltaPos.magnitude);
+                Vector3 velocityAtImpact = stepVelocity + Physics.gravity * timeOfImpact;
+                Vector3 projectedDir = Vector3.Project(velocityAtImpact, hit.normal);
+                Vector3 bounceSpeed = (velocityAtImpact - projectedDir) - (_simulatedElasticlty * projectedDir);
+                dir = bounceSpeed;
+                Vector3 bouncedPos = stepPos + (bounceSpeed * (_simulatedTimeStep - timeOfImpact));
+                Debug.DrawLine(stepPos, bouncedPos, Color.green, 10);
+                stepPos = bouncedPos;
+            }
+            else
+            {
+                Debug.DrawLine(stepPos, stepPos + deltaPos, Color.red, 10);
+                stepPos += deltaPos;
+                dir = stepVelocity;
+            }
+        }
     }
 }

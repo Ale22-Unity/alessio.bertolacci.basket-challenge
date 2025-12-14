@@ -5,6 +5,8 @@ using UnityEngine;
 public class Ball : MonoBehaviour, IThrowable
 {
     [SerializeField] private Rigidbody _rb;
+    [SerializeField] private SphereCollider _collider;
+    public float Radius => _collider.radius;
 
     public void ResetThrowable(Transform resetPos)
     {

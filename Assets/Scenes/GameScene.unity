@@ -196,6 +196,37 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 511216579}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &563200401
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 563200402}
+  m_Layer: 0
+  m_Name: ReflectedTargetPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &563200402
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 563200401}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.59, z: 0.501}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &585787183
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -679,7 +710,7 @@ Transform:
   m_GameObject: {fileID: 1303900356}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.59, z: -0.37}
+  m_LocalPosition: {x: 0.015, y: 2.694, z: 0.329}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1088,7 +1119,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 1
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 0
   m_CollisionDetection: 1
 --- !u!114 &1924897615
@@ -1104,6 +1135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rb: {fileID: 1924897614}
+  _collider: {fileID: 1924897613}
 --- !u!1 &2034642706
 GameObject:
   m_ObjectHideFlags: 0
@@ -1200,10 +1232,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1218aea865c2c0a4da9dab138c6a11bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deltaH: 2
+  deltaH: 1
   _target: {fileID: 1303900357}
   _throwPos: {fileID: 980833987}
   _ball: {fileID: 1924897615}
+  _simulatedBounces: 3
+  _simulatedTimeStep: 0.02
+  _maxSimulatedSteps: 250
+  _simulatedCollisionMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  _simulatedElasticlty: 0.7
 --- !u!1001 &2078707712
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1290,3 +1329,4 @@ SceneRoots:
   - {fileID: 2034642710}
   - {fileID: 1924897612}
   - {fileID: 1303900357}
+  - {fileID: 563200402}
