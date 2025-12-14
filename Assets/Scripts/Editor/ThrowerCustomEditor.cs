@@ -1,4 +1,5 @@
 #if UNITY_EDITOR
+using Cysharp.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 
@@ -11,7 +12,15 @@ public class ThrowerCustomEditor : Editor
         Thrower thrower = (Thrower)target;
         if (GUILayout.Button("DrawSimulatedThrow"))
         {
-            thrower.SimulateThrow();
+            thrower.SimulateThrow(10f);
+        }
+        if (GUILayout.Button("StartDynamicSimulation"))
+        {
+            thrower.StartDynamicSimulation().Forget();
+        }
+        if (GUILayout.Button("StopDynamicSimulation"))
+        {
+            thrower.StopDynamicSimulation();
         }
     }
 }
