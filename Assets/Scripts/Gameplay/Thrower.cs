@@ -16,10 +16,14 @@ public class Thrower : MonoBehaviour
     [SerializeField] private int _maxSimulatedSteps = 1000;
     [SerializeField] private LayerMask _simulatedCollisionMask;
     [SerializeField] private float _simulatedElasticlty = 0.7f;
+    [SerializeField] private float _simulatedFriction = 0.1f;
     [Space]
     [SerializeField] private string _backboardTag = "BackBoard";
     [SerializeField] private string _ringTag = "Ring";
     [SerializeField] private LayerMask _basketLayer;
+    [Space]
+    [SerializeField] private ThrowPosition _assignedPos;
+    [Space]
 
     private bool _dynamicSimulation;
 
@@ -103,6 +107,7 @@ public class Thrower : MonoBehaviour
                 bool bounce = Physics.SphereCast(stepPos, _ball.Radius, dir, out RaycastHit hit, deltaPos.magnitude, _simulatedCollisionMask, QueryTriggerInteraction.Ignore);
                 if (bounce)
                 {
+                    float colliderElasticity = hit.collider.material != null ? hit.collider.material.bounciness : 1f;
                     bounced = true;
                     Vector3 ballPosAtImpact = stepPos + (stepVelocity.normalized * hit.distance);
                     Debug.DrawLine(stepPos, ballPosAtImpact, Color.blue, duration);
@@ -112,7 +117,7 @@ public class Thrower : MonoBehaviour
                     _accountedTimeStep -= timeOfImpact;
                     Vector3 velocityAtImpact = stepVelocity + Physics.gravity * timeOfImpact;
                     Vector3 projectedDir = Vector3.Project(velocityAtImpact, hit.normal);
-                    Vector3 bounceSpeed = (velocityAtImpact - projectedDir) - (_simulatedElasticlty * projectedDir);
+                    Vector3 bounceSpeed = ((1f - _simulatedFriction) * (velocityAtImpact - projectedDir)) + (colliderElasticity * _simulatedElasticlty * -projectedDir);
                     dir = bounceSpeed;
                     steps[i] = new ThrowStep((int)(timeOfImpact * 1000), ballPosAtImpact, scored, GetHitCategory(hit.collider.gameObject));
                     i++;
@@ -180,4 +185,10 @@ public class Thrower : MonoBehaviour
         _dynamicSimulation = false;
     }
     
+    public bool TryAssignThrowerToPosition(ThrowPosition pos)
+    {
+        if(_assignedPos != null) { _assignedPos.RemoveThrowerFromPosition(); }
+        if (pos.TrySetThrowerToPosition(this)) { _assignedPos = pos; return true; }
+        return false;
+    }
 }
