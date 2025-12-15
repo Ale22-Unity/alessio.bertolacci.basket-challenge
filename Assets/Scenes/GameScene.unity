@@ -168,6 +168,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CleanTarget>k__BackingField: {fileID: 1911732301}
   <BBTarget>k__BackingField: {fileID: 563200402}
+  <MaxThrowSpeed>k__BackingField: 8.3
+  <MinThrowSpeed>k__BackingField: 7.6
+  <DeltaH>k__BackingField: 2
   _currentThrower: {fileID: 0}
 --- !u!1 &279011401
 GameObject:
@@ -215,6 +218,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CleanTarget>k__BackingField: {fileID: 1911732301}
   <BBTarget>k__BackingField: {fileID: 563200402}
+  <MaxThrowSpeed>k__BackingField: 8.3
+  <MinThrowSpeed>k__BackingField: 7.6
+  <DeltaH>k__BackingField: 2
   _currentThrower: {fileID: 0}
 --- !u!1 &336732161
 GameObject:
@@ -580,6 +586,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CleanTarget>k__BackingField: {fileID: 1911732301}
   <BBTarget>k__BackingField: {fileID: 563200402}
+  <MaxThrowSpeed>k__BackingField: 8.3
+  <MinThrowSpeed>k__BackingField: 7.6
+  <DeltaH>k__BackingField: 2
   _currentThrower: {fileID: 0}
 --- !u!1001 &772545424
 PrefabInstance:
@@ -939,6 +948,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 881163262}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!134 &921692093
+PhysicMaterial:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: CourtMaterial (Instance) (Instance) (Instance) (Instance)
+  dynamicFriction: 0
+  staticFriction: 0
+  bounciness: 1
+  frictionCombine: 3
+  bounceCombine: 3
 --- !u!1 &928176768
 GameObject:
   m_ObjectHideFlags: 0
@@ -1029,7 +1050,7 @@ Transform:
   m_GameObject: {fileID: 1250261027}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.9, y: 0, z: -4.23}
+  m_LocalPosition: {x: 0.9, y: 0, z: -4.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1049,6 +1070,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CleanTarget>k__BackingField: {fileID: 1911732301}
   <BBTarget>k__BackingField: {fileID: 563200402}
+  <MaxThrowSpeed>k__BackingField: 8.3
+  <MinThrowSpeed>k__BackingField: 7.6
+  <DeltaH>k__BackingField: 2
   _currentThrower: {fileID: 0}
 --- !u!1 &1252391700
 GameObject:
@@ -1090,7 +1114,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1252391700}
-  m_Material: {fileID: 1356539902}
+  m_Material: {fileID: 921692093}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1135,13 +1159,13 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!134 &1356539902
+--- !u!134 &1419703899
 PhysicMaterial:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: CourtMaterial (Instance)
+  m_Name: BackBoardMaterial (Instance) (Instance)
   dynamicFriction: 0
   staticFriction: 0
   bounciness: 1
@@ -1233,6 +1257,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CleanTarget>k__BackingField: {fileID: 1911732301}
   <BBTarget>k__BackingField: {fileID: 563200402}
+  <MaxThrowSpeed>k__BackingField: 8.3
+  <MinThrowSpeed>k__BackingField: 7.6
+  <DeltaH>k__BackingField: 2
   _currentThrower: {fileID: 2034642711}
 --- !u!1 &1629696466
 GameObject:
@@ -1280,6 +1307,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CleanTarget>k__BackingField: {fileID: 1911732301}
   <BBTarget>k__BackingField: {fileID: 563200402}
+  <MaxThrowSpeed>k__BackingField: 8.3
+  <MinThrowSpeed>k__BackingField: 7.6
+  <DeltaH>k__BackingField: 2
   _currentThrower: {fileID: 0}
 --- !u!1 &1653286319
 GameObject:
@@ -1519,19 +1549,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CleanTarget>k__BackingField: {fileID: 1911732301}
   <BBTarget>k__BackingField: {fileID: 563200402}
+  <MaxThrowSpeed>k__BackingField: 8.3
+  <MinThrowSpeed>k__BackingField: 7.6
+  <DeltaH>k__BackingField: 2
   _currentThrower: {fileID: 0}
---- !u!134 &1829481593
-PhysicMaterial:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: BackBoardMaterial (Instance)
-  dynamicFriction: 0
-  staticFriction: 0
-  bounciness: 1
-  frictionCombine: 3
-  bounceCombine: 3
 --- !u!1 &1841534434
 GameObject:
   m_ObjectHideFlags: 0
@@ -1573,7 +1594,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1841534434}
-  m_Material: {fileID: 1829481593}
+  m_Material: {fileID: 1419703899}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1634,6 +1655,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CleanTarget>k__BackingField: {fileID: 1911732301}
   <BBTarget>k__BackingField: {fileID: 563200402}
+  <MaxThrowSpeed>k__BackingField: 8.3
+  <MinThrowSpeed>k__BackingField: 7.6
+  <DeltaH>k__BackingField: 2
   _currentThrower: {fileID: 0}
 --- !u!1001 &1888782405
 PrefabInstance:
@@ -1755,6 +1779,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CleanTarget>k__BackingField: {fileID: 1911732301}
   <BBTarget>k__BackingField: {fileID: 563200402}
+  <MaxThrowSpeed>k__BackingField: 8.3
+  <MinThrowSpeed>k__BackingField: 7.6
+  <DeltaH>k__BackingField: 2
   _currentThrower: {fileID: 0}
 --- !u!1 &1911732300
 GameObject:
@@ -1891,6 +1918,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2034642710}
   - component: {fileID: 2034642711}
+  - component: {fileID: 2034642712}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1928,8 +1956,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1218aea865c2c0a4da9dab138c6a11bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deltaH: 1
-  _target: {fileID: 563200402}
+  _deltaH: 2
+  _target: {fileID: 1911732301}
   _throwPos: {fileID: 980833987}
   _ball: {fileID: 1924897615}
   _simulatedTimeStep: 0.02
@@ -1945,6 +1973,22 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _assignedPos: {fileID: 1517585561}
+  _maxSpeed: 11
+  _minSpeed: 10.5
+  _errorMarginPerc: 0.1
+--- !u!114 &2034642712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2034642706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 750b2f86e2a21c6429cf40219d03f3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _thrower: {fileID: 2034642711}
 --- !u!1001 &2078707712
 PrefabInstance:
   m_ObjectHideFlags: 0

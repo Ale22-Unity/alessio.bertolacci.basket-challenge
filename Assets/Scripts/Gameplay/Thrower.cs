@@ -3,11 +3,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Thrower : MonoBehaviour
 {
-    [SerializeField] private float deltaH = 5;
+    [SerializeField] private float _deltaH = 5;
     [SerializeField] private Transform _target;
     [SerializeField] private Transform _throwPos;
     [SerializeField] private Ball _ball;
@@ -23,12 +25,17 @@ public class Thrower : MonoBehaviour
     [SerializeField] private LayerMask _basketLayer;
     [Space]
     [SerializeField] private ThrowPosition _assignedPos;
+    [SerializeField] private float _maxSpeed = 8;
+    [SerializeField] private float _minSpeed = 6;
+    [SerializeField] private float _errorMarginPerc = 0.1f;
     [Space]
-
+    private IControlThrower _controller;
     private bool _dynamicSimulation;
+    private bool _activeSimulation;
 
     private void Awake()
     {
+        _controller = gameObject.GetComponent<IControlThrower>();
         if (GameClient.Client != null)
         {
             GameClient.Client.EventBus.Subscribe<ThrowBallTestEvent>(On);
@@ -50,7 +57,7 @@ public class Thrower : MonoBehaviour
         return (-b + sign * Mathf.Sqrt(b * b - 4 * a * c)) / (2 * a);
     }
 
-    public void CalculatePathWithFixedHeight(Transform fromTransform, Transform targetTransform, float deltaH, out Vector3 fireDirection, out float v0, out float time)
+    public void CalculatePathWithFixedHeight(Transform fromTransform, Transform targetTransform, float deltaH, out Vector3 fireDirection, out float v0)
     {
         Vector3 direction = targetTransform.transform.position - fromTransform.position;
         Vector3 groundDir = new Vector3(direction.x, 0, direction.z);
@@ -71,7 +78,7 @@ public class Thrower : MonoBehaviour
         float tplus = QuadraticEquation(a, b, c, 1);
         float tmin = QuadraticEquation(a, b, c, -1);
 
-        time = tplus > tmin ? tplus : tmin;
+        float time = tplus > tmin ? tplus : tmin;
 
         float angle = Mathf.Atan(b * time / xt);
 
@@ -87,13 +94,15 @@ public class Thrower : MonoBehaviour
 
     private void On(ThrowBallTestEvent e)
     {
-        _ball.SimulateThrow(SimulateThrow(0.01f)).Forget();
+        CalculatePathWithFixedHeight(_throwPos, _target, _deltaH, out Vector3 dir, out float v0);
+        _ball.SimulateThrow(SimulateThrow(dir, v0, 0.01f)).Forget();
     }
 
-    public ThrowStep[] SimulateThrow(float duration)
+    public ThrowStep[] SimulateThrow(Vector3 startDirection, float v0, float duration)
     {
+        Vector3 dir = startDirection.normalized * v0;
         ThrowStep[] steps = new ThrowStep[_maxSimulatedSteps];
-        CalculatePathWithFixedHeight(_throwPos, _target, deltaH, out Vector3 dir, out float v0, out float time);
+        Debug.Log($"Throw speed is {v0}");
         Vector3 stepPos = _throwPos.position;
         int i = 0;
         while(i < _maxSimulatedSteps)
@@ -139,7 +148,8 @@ public class Thrower : MonoBehaviour
 
     public async UniTask PlayOutThrow()
     {
-        await _ball.SimulateThrow(SimulateThrow(0.01f));
+        CalculatePathWithFixedHeight(_throwPos, _target, _deltaH, out Vector3 dir, out float v0);
+        await _ball.SimulateThrow(SimulateThrow(dir, v0, 0.01f));
     }
 
     private bool CheckForBasket(Vector3 startPos, Vector3 endPos)
@@ -175,7 +185,8 @@ public class Thrower : MonoBehaviour
         _dynamicSimulation = true;
         while (_dynamicSimulation)
         {
-            SimulateThrow(0.2f);
+            CalculatePathWithFixedHeight(_throwPos, _target, _deltaH, out Vector3 dir, out float v0);
+            SimulateThrow(dir, v0, 0.2f);
             await Task.Delay(200);
         }
     }
@@ -188,7 +199,48 @@ public class Thrower : MonoBehaviour
     public bool TryAssignThrowerToPosition(ThrowPosition pos)
     {
         if(_assignedPos != null) { _assignedPos.RemoveThrowerFromPosition(); }
-        if (pos.TrySetThrowerToPosition(this)) { _assignedPos = pos; return true; }
+        if (pos.TrySetThrowerToPosition(this)) 
+        { 
+            _assignedPos = pos;
+            if(_controller != null)
+            {
+                CalculatePathWithFixedHeight(_throwPos, _assignedPos.CleanTarget, _assignedPos.DeltaH, out Vector3 pDir, out float perfectV);
+                CalculatePathWithFixedHeight(_throwPos, _assignedPos.BBTarget, _assignedPos.DeltaH, out Vector3 bbDir, out float bbV);
+                _assignedPos.SetSweetSpotData(new SweetSpotInfo(perfectV, pDir), new SweetSpotInfo(bbV, bbDir));
+                _controller.OnAssignedToThrowPos(_assignedPos, _errorMarginPerc);
+            }
+            return true; 
+        }
         return false;
+    }
+
+    public async UniTask ThrowFromInput(float throwPerc)
+    {
+        if (_activeSimulation) { return; }
+        _activeSimulation = true;
+        float deltaSpeed = _assignedPos.MaxThrowSpeed - _assignedPos.MinThrowSpeed;
+        float speedError = deltaSpeed * _errorMarginPerc * 0.5f;
+        float throwSpeed = _assignedPos.MinThrowSpeed + (deltaSpeed * throwPerc);
+        Vector3 dir = _assignedPos.PerfetThrow.Direction;
+        if(BetweenValuesCheck(_assignedPos.PerfetThrow.Velocity - speedError, _assignedPos.PerfetThrow.Velocity + speedError, throwSpeed))
+        {
+            throwSpeed = _assignedPos.PerfetThrow.Velocity;
+        }
+        else if (BetweenValuesCheck(_assignedPos.BBThrow.Velocity - speedError, _assignedPos.BBThrow.Velocity + speedError, throwSpeed))
+        {
+            throwSpeed = _assignedPos.BBThrow.Velocity;
+            dir = _assignedPos.BBThrow.Direction;
+        }
+        if(throwSpeed > _assignedPos.BBThrow.Velocity + speedError)
+        {
+            dir = _assignedPos.BBThrow.Direction;
+        }
+        await _ball.SimulateThrow(SimulateThrow(dir, throwSpeed, 0.01f));
+        _activeSimulation = false;
+    }
+
+    private bool BetweenValuesCheck(float minValue, float maxValue, float target)
+    {
+        return (target > minValue && target < maxValue);
     }
 }

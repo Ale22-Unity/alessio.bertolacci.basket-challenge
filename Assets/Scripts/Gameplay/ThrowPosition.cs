@@ -6,6 +6,11 @@ public class ThrowPosition : MonoBehaviour
 {
     [field:SerializeField] public Transform CleanTarget {  get; private set; }
     [field:SerializeField] public Transform BBTarget {  get; private set; }
+    [field: SerializeField] public float MaxThrowSpeed { get; private set; }
+    [field: SerializeField] public float MinThrowSpeed { get; private set; }
+    [field: SerializeField] public float DeltaH { get; private set; } = 2;
+    public SweetSpotInfo PerfetThrow {  get; private set; }
+    public SweetSpotInfo BBThrow { get; private set; }
 
     [SerializeField] private Thrower _currentThrower;
 
@@ -23,6 +28,24 @@ public class ThrowPosition : MonoBehaviour
     public void RemoveThrowerFromPosition()
     {
         _currentThrower = null;
+    }
+
+    public void SetSweetSpotData(SweetSpotInfo perfetThrow, SweetSpotInfo bbThrow)
+    {
+        PerfetThrow = perfetThrow;
+        BBThrow = bbThrow;
+    }
+}
+
+public readonly struct SweetSpotInfo
+{
+    public readonly float Velocity;
+    public readonly Vector3 Direction;
+
+    public SweetSpotInfo(float velocity, Vector3 direction)
+    {
+        Velocity = velocity;
+        Direction = direction;
     }
 }
 

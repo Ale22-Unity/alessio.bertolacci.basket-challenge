@@ -19,6 +19,7 @@ public class ShotPowerBar : MonoBehaviour
         {
             GameClient.Client.EventBus.Subscribe<SwipeStartedEvent>(On);
             GameClient.Client.EventBus.Subscribe<SwipeEndedEvent>(On);
+            GameClient.Client.EventBus.Subscribe<PlayerAssignedAtPositionEvent>(On);
         }
     }
 
@@ -28,6 +29,7 @@ public class ShotPowerBar : MonoBehaviour
         {
             GameClient.Client.EventBus.Unsubscribe<SwipeStartedEvent>(On);
             GameClient.Client.EventBus.Unsubscribe<SwipeEndedEvent>(On);
+            GameClient.Client.EventBus.Unsubscribe<PlayerAssignedAtPositionEvent>(On);
         }
     }
 
@@ -75,10 +77,16 @@ public class ShotPowerBar : MonoBehaviour
 
     private void On(SwipeStartedEvent e)
     {
-        DrawPowerRequirements(0.5f, 0.65f, 0.1f);
         ShowIndicator();
         _currentSwipe = e.SwipeInput;
     }
 
-
+    private void On(PlayerAssignedAtPositionEvent e)
+    {
+        float delta = e.Position.MaxThrowSpeed - e.Position.MinThrowSpeed;
+        float perfectPerc = 1 -((e.Position.MaxThrowSpeed - e.Position.PerfetThrow.Velocity) / delta);
+        float bbPerc = 1 -((e.Position.MaxThrowSpeed - e.Position.BBThrow.Velocity) / delta);
+        Debug.Log($"speeds are {e.Position.PerfetThrow} {e.Position.BBThrow}");
+        DrawPowerRequirements(perfectPerc, bbPerc, e.ErrorMarginPerc);
+    }
 }

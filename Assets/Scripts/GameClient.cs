@@ -47,11 +47,11 @@ public class GameClient : MonoBehaviour
     {
         await CloseMenu(MenuID.Reward);
         await CloseMenu(MenuID.MainMenu);
-        await SceneManager.LoadSceneAsync(GameSceneName, LoadSceneMode.Additive);
         GameHUD gameHUDInstance = Instantiate(gameHUDPrefab, uiRoot);
         gameHUDInstance.Setup(new GameHUDData());
         activeMenuItems.Add(gameHUDInstance);
         await gameHUDInstance.PanelAnimations.Open();
+        await SceneManager.LoadSceneAsync(GameSceneName, LoadSceneMode.Additive);
     }
     private void On(GameEndedEvent e)
     {

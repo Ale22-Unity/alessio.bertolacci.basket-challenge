@@ -10,10 +10,6 @@ public class ThrowerCustomEditor : Editor
     {
         base.OnInspectorGUI();
         Thrower thrower = (Thrower)target;
-        if (GUILayout.Button("DrawSimulatedThrow"))
-        {
-            thrower.SimulateThrow(10f);
-        }
         if (GUILayout.Button("StartDynamicSimulation"))
         {
             thrower.StartDynamicSimulation().Forget();
