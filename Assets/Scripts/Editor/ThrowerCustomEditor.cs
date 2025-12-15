@@ -22,6 +22,10 @@ public class ThrowerCustomEditor : Editor
         {
             thrower.StopDynamicSimulation();
         }
+        if (GUILayout.Button("PlayOutThrow"))
+        {
+            thrower.PlayOutThrow().Forget();
+        }
     }
 }
 #endif
