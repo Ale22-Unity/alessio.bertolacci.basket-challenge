@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
     public int AddScore(ScoreCategory category, IControlThrower player)
     {
         PlayerData data = _playerData.FirstOrDefault((p) => p.Player == player);
-        if(data == null) { return; }
+        if(data == null) { return 0; }
         ScoreEntry selectedScore = _scores.FirstOrDefault(e => e.Category == category);
         data.AddScore(selectedScore.ScoreAmount);
         return selectedScore.ScoreAmount;
