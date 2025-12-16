@@ -9,7 +9,10 @@ public class PlayerControl : MonoBehaviour, IControlThrower
     [SerializeField] private Thrower _thrower;
     [SerializeField] private GameManager _gameManager;
     [SerializeField] private Transform _cameraTarget;
+    [SerializeField] private Transform _cameraTargetThrow;
     [SerializeField] private float _errorMarginPerc = 0.1f;
+    [SerializeField] private float _cameraMoveSpeed = 2f;
+    [SerializeField] private float _cameraRotSpeed = 100f;
     private bool _waitingThrow = false;
 
     private void Start()
@@ -46,6 +49,10 @@ public class PlayerControl : MonoBehaviour, IControlThrower
         if (_waitingThrow) { return; }
         _waitingThrow = true;
         if (!_gameManager.GameStarted) { return; }
+        if(GameClient.Client != null)
+        {
+            GameClient.Client.GameCamera.SetTarget(_cameraTargetThrow, _thrower.BallCameraTarget, _cameraRotSpeed, _cameraMoveSpeed);
+        }
         await _thrower.ThrowFromInput(perc, _errorMarginPerc);
         _gameManager.AssignThrowerToRandomPos(this);
         _waitingThrow = false;

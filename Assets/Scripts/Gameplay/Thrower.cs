@@ -27,6 +27,8 @@ public class Thrower : MonoBehaviour
     private bool _dynamicSimulation;
     private bool _activeSimulation;
 
+    public Transform BallCameraTarget => _ball.transform;
+
     private void Awake()
     {
         _controller = gameObject.GetComponent<IControlThrower>();

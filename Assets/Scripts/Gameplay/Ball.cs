@@ -5,10 +5,22 @@ public class Ball : MonoBehaviour, IThrowable
 {
     [SerializeField] private SphereCollider _collider;
     public float Radius => _collider.radius;
+    private Vector3 _targetPos;
+
+    private void Awake()
+    {
+        _targetPos = transform.position;
+    }
+
+    private void Update()
+    {
+        transform.position = _targetPos;
+    }
 
     public void ResetThrowable(Transform resetPos)
     {
         transform.position = resetPos.position;
+        _targetPos = transform.position;
     }
 
     public async UniTask SimulateThrow(ThrowStep[] steps, IControlThrower thrower)
@@ -18,9 +30,8 @@ public class Ball : MonoBehaviour, IThrowable
 
         foreach(ThrowStep step in steps)
         {
-            await UniTask.Delay(step.Ms);
-            transform.position = step.TargetPos;
-            if(step.HitCategory == HitCategory.Backboard)
+            _targetPos = step.TargetPos;
+            if (step.HitCategory == HitCategory.Backboard)
             {
                 bbHit = true;
             }
@@ -32,6 +43,7 @@ public class Ball : MonoBehaviour, IThrowable
             {
                 AddScore(bbHit, ringHit, thrower);
             }
+            await UniTask.Delay(step.Ms);
         }
     }
 

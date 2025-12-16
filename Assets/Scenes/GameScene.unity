@@ -312,7 +312,7 @@ Transform:
   m_GameObject: {fileID: 373387475}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 3.45, z: -3.45}
+  m_LocalPosition: {x: -0, y: 2.62, z: -3.94}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1386,6 +1386,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f3ead0d534c2c64bb0029710a447486, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerData: []
   _scores:
   - <Category>k__BackingField: 0
     <ScoreAmount>k__BackingField: 2
@@ -1404,6 +1405,37 @@ MonoBehaviour:
   - {fileID: 1517585561}
   - {fileID: 1813759437}
   _gameStarted: 1
+--- !u!1 &1715212518
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1715212519}
+  m_Layer: 0
+  m_Name: CameraTargetThrow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1715212519
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1715212518}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 3.62, z: -0.25}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2034642710}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1801744254
 GameObject:
   m_ObjectHideFlags: 0
@@ -1981,6 +2013,7 @@ Transform:
   - {fileID: 980833987}
   - {fileID: 881163263}
   - {fileID: 373387476}
+  - {fileID: 1715212519}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2034642711
@@ -2029,7 +2062,10 @@ MonoBehaviour:
   _thrower: {fileID: 2034642711}
   _gameManager: {fileID: 1653286321}
   _cameraTarget: {fileID: 373387476}
+  _cameraTargetThrow: {fileID: 1715212519}
   _errorMarginPerc: 0.1
+  _cameraMoveSpeed: 2
+  _cameraRotSpeed: 50
 --- !u!1001 &2078707712
 PrefabInstance:
   m_ObjectHideFlags: 0
