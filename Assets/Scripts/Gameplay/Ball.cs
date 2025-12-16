@@ -11,12 +11,35 @@ public class Ball : MonoBehaviour, IThrowable
         transform.position = resetPos.position;
     }
 
-    public async UniTask SimulateThrow(ThrowStep[] steps)
+    public async UniTask SimulateThrow(ThrowStep[] steps, IControlThrower thrower)
     {
+        bool bbHit = false;
+        bool ringHit = false;
+
         foreach(ThrowStep step in steps)
         {
             await UniTask.Delay(step.Ms);
             transform.position = step.TargetPos;
+            if(step.HitCategory == HitCategory.Backboard)
+            {
+                bbHit = true;
+            }
+            else if (step.HitCategory == HitCategory.Ring)
+            {
+                ringHit = true;
+            }
+            if (step.Scored)
+            {
+                AddScore(bbHit, ringHit, thrower);
+            }
         }
+    }
+
+    private void AddScore(bool bbHit, bool ringHit, IControlThrower player)
+    {
+        if(player == null) { return; }
+        if (bbHit) { player.ScoredPoints(ScoreCategory.BB); return; }
+        if (ringHit) { player.ScoredPoints(ScoreCategory.Normal); return; }
+        player.ScoredPoints(ScoreCategory.Clean);
     }
 }

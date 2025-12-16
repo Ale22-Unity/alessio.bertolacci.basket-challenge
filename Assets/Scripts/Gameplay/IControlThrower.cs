@@ -4,7 +4,6 @@ using UnityEngine;
 
 public interface IControlThrower
 {
-    public void OnAssignedToThrowPos(ThrowPosition position, float errorMarginPerc);
-    
-
+    public bool TryAssignThrowerToPos(ThrowPosition position);
+    public void ScoredPoints(ScoreCategory score);
 }

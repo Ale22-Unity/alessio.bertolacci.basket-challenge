@@ -222,6 +222,18 @@ MonoBehaviour:
   <MinThrowSpeed>k__BackingField: 7.6
   <DeltaH>k__BackingField: 2
   _currentThrower: {fileID: 0}
+--- !u!134 &293372978
+PhysicMaterial:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: CourtMaterial (Instance) (Instance) (Instance) (Instance) (Instance)
+  dynamicFriction: 0
+  staticFriction: 0
+  bounciness: 1
+  frictionCombine: 3
+  bounceCombine: 3
 --- !u!1 &336732161
 GameObject:
   m_ObjectHideFlags: 0
@@ -979,18 +991,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 881163262}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!134 &921692093
-PhysicMaterial:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: CourtMaterial (Instance) (Instance) (Instance) (Instance)
-  dynamicFriction: 0
-  staticFriction: 0
-  bounciness: 1
-  frictionCombine: 3
-  bounceCombine: 3
 --- !u!1 &928176768
 GameObject:
   m_ObjectHideFlags: 0
@@ -1145,7 +1145,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1252391700}
-  m_Material: {fileID: 921692093}
+  m_Material: {fileID: 293372978}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1386,6 +1386,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f3ead0d534c2c64bb0029710a447486, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _scores:
+  - <Category>k__BackingField: 0
+    <ScoreAmount>k__BackingField: 2
+  - <Category>k__BackingField: 2
+    <ScoreAmount>k__BackingField: 3
+  - <Category>k__BackingField: 1
+    <ScoreAmount>k__BackingField: 2
   _throwPositions:
   - {fileID: 1854055245}
   - {fileID: 279011403}
@@ -1898,7 +1905,7 @@ Transform:
   m_GameObject: {fileID: 1924897611}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.956394, y: 0.18131396, z: -0.5123331}
+  m_LocalPosition: {x: -3.9876618, y: 0.336569, z: 3.1361265}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2007,7 +2014,6 @@ MonoBehaviour:
   _assignedPos: {fileID: 1517585561}
   _maxSpeed: 11
   _minSpeed: 10.5
-  _errorMarginPerc: 0.1
 --- !u!114 &2034642712
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2023,6 +2029,7 @@ MonoBehaviour:
   _thrower: {fileID: 2034642711}
   _gameManager: {fileID: 1653286321}
   _cameraTarget: {fileID: 373387476}
+  _errorMarginPerc: 0.1
 --- !u!1001 &2078707712
 PrefabInstance:
   m_ObjectHideFlags: 0

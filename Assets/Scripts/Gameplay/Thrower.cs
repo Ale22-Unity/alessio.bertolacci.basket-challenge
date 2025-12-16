@@ -1,11 +1,6 @@
 using Cysharp.Threading.Tasks;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Thrower : MonoBehaviour
 {
@@ -27,7 +22,6 @@ public class Thrower : MonoBehaviour
     [SerializeField] private ThrowPosition _assignedPos;
     [SerializeField] private float _maxSpeed = 8;
     [SerializeField] private float _minSpeed = 6;
-    [SerializeField] private float _errorMarginPerc = 0.1f;
     [Space]
     private IControlThrower _controller;
     private bool _dynamicSimulation;
@@ -95,7 +89,7 @@ public class Thrower : MonoBehaviour
     private void On(ThrowBallTestEvent e)
     {
         CalculatePathWithFixedHeight(_throwPos, _target, _deltaH, out Vector3 dir, out float v0);
-        _ball.SimulateThrow(SimulateThrow(dir, v0, 0.01f)).Forget();
+        _ball.SimulateThrow(SimulateThrow(dir, v0, 0.01f), _controller).Forget();
     }
 
     public ThrowStep[] SimulateThrow(Vector3 startDirection, float v0, float duration)
@@ -149,7 +143,7 @@ public class Thrower : MonoBehaviour
     public async UniTask PlayOutThrow()
     {
         CalculatePathWithFixedHeight(_throwPos, _target, _deltaH, out Vector3 dir, out float v0);
-        await _ball.SimulateThrow(SimulateThrow(dir, v0, 0.01f));
+        await _ball.SimulateThrow(SimulateThrow(dir, v0, 0.01f), _controller);
     }
 
     private bool CheckForBasket(Vector3 startPos, Vector3 endPos)
@@ -207,7 +201,7 @@ public class Thrower : MonoBehaviour
                 CalculatePathWithFixedHeight(_throwPos, _assignedPos.CleanTarget, _assignedPos.DeltaH, out Vector3 pDir, out float perfectV);
                 CalculatePathWithFixedHeight(_throwPos, _assignedPos.BBTarget, _assignedPos.DeltaH, out Vector3 bbDir, out float bbV);
                 _assignedPos.SetSweetSpotData(new SweetSpotInfo(perfectV, pDir), new SweetSpotInfo(bbV, bbDir));
-                _controller.OnAssignedToThrowPos(_assignedPos, _errorMarginPerc);
+                _controller.TryAssignThrowerToPos(_assignedPos);
             }
             if (oldPos != null) { oldPos.RemoveThrowerFromPosition(); }
             return true; 
@@ -215,12 +209,12 @@ public class Thrower : MonoBehaviour
         return false;
     }
 
-    public async UniTask ThrowFromInput(float throwPerc)
+    public async UniTask ThrowFromInput(float throwPerc, float errorMargin)
     {
         if (_activeSimulation) { return; }
         _activeSimulation = true;
         float deltaSpeed = _assignedPos.MaxThrowSpeed - _assignedPos.MinThrowSpeed;
-        float speedError = deltaSpeed * _errorMarginPerc * 0.5f;
+        float speedError = deltaSpeed * errorMargin * 0.5f;
         float throwSpeed = _assignedPos.MinThrowSpeed + (deltaSpeed * throwPerc);
         Vector3 dir = _assignedPos.PerfetThrow.Direction;
         if(Utils.BetweenValuesCheck(_assignedPos.PerfetThrow.Velocity - speedError, _assignedPos.PerfetThrow.Velocity + speedError, throwSpeed))
@@ -236,7 +230,7 @@ public class Thrower : MonoBehaviour
         {
             dir = _assignedPos.BBThrow.Direction;
         }
-        await _ball.SimulateThrow(SimulateThrow(dir, throwSpeed, 0.01f));
+        await _ball.SimulateThrow(SimulateThrow(dir, throwSpeed, 0.01f), _controller);
         _activeSimulation = false;
     }
 }
