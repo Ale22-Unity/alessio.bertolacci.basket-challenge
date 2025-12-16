@@ -16,7 +16,7 @@ public class GameClient : MonoBehaviour
     private List<IMenuUI> activeMenuItems = new List<IMenuUI>();
 
     public EventBus EventBus {  get; private set; }
-    [field:SerializeField] public Camera GameCamera { get; private set; }
+    [field:SerializeField] public GameCamera GameCamera { get; private set; }
 
     private void Awake()
     {

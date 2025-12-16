@@ -198,7 +198,7 @@ public class Thrower : MonoBehaviour
     
     public bool TryAssignThrowerToPosition(ThrowPosition pos)
     {
-        if(_assignedPos != null) { _assignedPos.RemoveThrowerFromPosition(); }
+        ThrowPosition oldPos = _assignedPos;
         if (pos.TrySetThrowerToPosition(this)) 
         { 
             _assignedPos = pos;
@@ -209,6 +209,7 @@ public class Thrower : MonoBehaviour
                 _assignedPos.SetSweetSpotData(new SweetSpotInfo(perfectV, pDir), new SweetSpotInfo(bbV, bbDir));
                 _controller.OnAssignedToThrowPos(_assignedPos, _errorMarginPerc);
             }
+            if (oldPos != null) { oldPos.RemoveThrowerFromPosition(); }
             return true; 
         }
         return false;
@@ -222,11 +223,11 @@ public class Thrower : MonoBehaviour
         float speedError = deltaSpeed * _errorMarginPerc * 0.5f;
         float throwSpeed = _assignedPos.MinThrowSpeed + (deltaSpeed * throwPerc);
         Vector3 dir = _assignedPos.PerfetThrow.Direction;
-        if(BetweenValuesCheck(_assignedPos.PerfetThrow.Velocity - speedError, _assignedPos.PerfetThrow.Velocity + speedError, throwSpeed))
+        if(Utils.BetweenValuesCheck(_assignedPos.PerfetThrow.Velocity - speedError, _assignedPos.PerfetThrow.Velocity + speedError, throwSpeed))
         {
             throwSpeed = _assignedPos.PerfetThrow.Velocity;
         }
-        else if (BetweenValuesCheck(_assignedPos.BBThrow.Velocity - speedError, _assignedPos.BBThrow.Velocity + speedError, throwSpeed))
+        else if (Utils.BetweenValuesCheck(_assignedPos.BBThrow.Velocity - speedError, _assignedPos.BBThrow.Velocity + speedError, throwSpeed))
         {
             throwSpeed = _assignedPos.BBThrow.Velocity;
             dir = _assignedPos.BBThrow.Direction;
@@ -237,10 +238,5 @@ public class Thrower : MonoBehaviour
         }
         await _ball.SimulateThrow(SimulateThrow(dir, throwSpeed, 0.01f));
         _activeSimulation = false;
-    }
-
-    private bool BetweenValuesCheck(float minValue, float maxValue, float target)
-    {
-        return (target > minValue && target < maxValue);
     }
 }

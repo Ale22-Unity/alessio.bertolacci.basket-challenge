@@ -4,21 +4,18 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private Thrower _thrower;
     [SerializeField] private ThrowPosition[] _throwPositions;
+    [SerializeField] private bool _gameStarted = true;
 
-    private void Start()
-    {
-        AssignThrowerToRandomPos();
-    }
+    public bool GameStarted => _gameStarted;
 
-    public void AssignThrowerToRandomPos()
+    public void AssignThrowerToRandomPos(Thrower thrower)
     {
         bool assigned = false;
         while (!assigned)
         {
             int selectedPos = Random.Range(0, _throwPositions.Length); 
-            assigned = _thrower.TryAssignThrowerToPosition(_throwPositions[selectedPos]);
+            assigned = thrower.TryAssignThrowerToPosition(_throwPositions[selectedPos]);
         }
     }
 }

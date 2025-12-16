@@ -275,6 +275,37 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.3, y: 0.001, z: 0.3}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &373387475
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 373387476}
+  m_Layer: 0
+  m_Name: CameraTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &373387476
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 373387475}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 3.45, z: -3.45}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2034642710}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &511216579
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1355,7 +1386,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f3ead0d534c2c64bb0029710a447486, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _thrower: {fileID: 2034642711}
   _throwPositions:
   - {fileID: 1854055245}
   - {fileID: 279011403}
@@ -1366,6 +1396,7 @@ MonoBehaviour:
   - {fileID: 758624270}
   - {fileID: 1517585561}
   - {fileID: 1813759437}
+  _gameStarted: 1
 --- !u!1 &1801744254
 GameObject:
   m_ObjectHideFlags: 0
@@ -1942,6 +1973,7 @@ Transform:
   - {fileID: 795841072}
   - {fileID: 980833987}
   - {fileID: 881163263}
+  - {fileID: 373387476}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2034642711
@@ -1989,6 +2021,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _thrower: {fileID: 2034642711}
+  _gameManager: {fileID: 1653286321}
+  _cameraTarget: {fileID: 373387476}
 --- !u!1001 &2078707712
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2047,6 +2081,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 31ab7d5904367c34791a4070093fa326,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 31ab7d5904367c34791a4070093fa326,
         type: 3}
       propertyPath: m_Name
@@ -2080,7 +2119,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2078707714}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 32661500754aa7d4281bfd718f26a865, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

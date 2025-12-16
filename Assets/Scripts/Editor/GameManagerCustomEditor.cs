@@ -12,7 +12,7 @@ public class GameManagerCustomEditor : Editor
         GameManager manager = (GameManager)target;
         if (GUILayout.Button("AssignThrowerToRandomPos"))
         {
-            manager.AssignThrowerToRandomPos();
+            //manager.AssignThrowerToRandomPos();
         }
     }
 }
