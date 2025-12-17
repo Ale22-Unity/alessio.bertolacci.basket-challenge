@@ -43,20 +43,21 @@ public class PlayerControl : MonoBehaviour, IControlThrower
     private void On(SwipeEndedEvent e)
     {
         _throw = ThrowBall(e.SwipeInput.ThrowStrenghtPerc);
-        _throw.Forget();
+        _throw.Preserve();
     }
 
     private async UniTask ThrowBall(float perc)
     {
         if (_waitingThrow) { return; }
+        if (!_gameManager.GameStarted) { Debug.Log("Game not started"); return; }
         _waitingThrow = true;
-        if (!_gameManager.GameStarted) { return; }
-        if(GameClient.Client != null)
+        if (GameClient.Client != null)
         {
             GameClient.Client.GameCamera.SetTarget(_cameraTargetThrow, _thrower.BallCameraTarget, _cameraRotSpeed, _cameraMoveSpeed);
         }
         await _thrower.ThrowFromInput(perc, _errorMarginPerc);
         _gameManager.AssignThrowerToRandomPos(this);
+        _thrower.ResetBall();
         _waitingThrow = false;
     }
 

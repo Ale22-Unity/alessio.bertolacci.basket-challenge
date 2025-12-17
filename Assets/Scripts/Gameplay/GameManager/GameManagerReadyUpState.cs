@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameManagerReadyUpState : BaseState<GameManagerStates, GameManager>
 {
+    private int _timerInt = 0;
+    private bool _timerEnded = false;
 
     public GameManagerReadyUpState(GameManagerStates key, GameManager ctx) : base(key, ctx)
     {
@@ -12,6 +14,12 @@ public class GameManagerReadyUpState : BaseState<GameManagerStates, GameManager>
     public override void EnterState()
     {
         _ctx.ReadyUpTimer.ResetTimer();
+        _timerEnded = _ctx.ReadyUpTimer.TimerEnded();
+        _timerInt = (int)_ctx.ReadyUpTimer.TimerDurationS - (int)_ctx.ReadyUpTimer.CurrentTimer;
+        if (GameClient.Client != null)
+        {
+            GameClient.Client.EventBus.Fire<ReadyUpTimerEvent>(new ReadyUpTimerEvent(TimerEventCategory.Started, _timerInt));
+        }
     }
 
     public override void ExitState()
@@ -27,11 +35,30 @@ public class GameManagerReadyUpState : BaseState<GameManagerStates, GameManager>
     public override void FrameUpdate()
     {
         _ctx.ReadyUpTimer.UpdateTimer(Time.deltaTime);
+        int tepTimerInt = (int)_ctx.ReadyUpTimer.TimerDurationS - (int)_ctx.ReadyUpTimer.CurrentTimer;
+        if (_ctx.ReadyUpTimer.TimerEnded())
+        {
+            _timerEnded = true;
+            if (GameClient.Client != null)
+            {
+                GameClient.Client.EventBus.Fire<ReadyUpTimerEvent>(new ReadyUpTimerEvent(TimerEventCategory.Ended, tepTimerInt));
+            }
+            return;
+        }
+        if(tepTimerInt != _timerInt)
+        {
+            _timerInt = tepTimerInt;
+            if (GameClient.Client != null)
+            {
+                GameClient.Client.EventBus.Fire<ReadyUpTimerEvent>(new ReadyUpTimerEvent(TimerEventCategory.Update, _timerInt));
+            }
+        }
+        
     }
 
     public override GameManagerStates GetNextState()
     {
-        if(_ctx.ReadyUpTimer.TimerEnded()) { return GameManagerStates.Match; }
+        if(_timerEnded) { return GameManagerStates.Match; }
         return GameManagerStates.ReadyUp;
     }
 
@@ -40,3 +67,4 @@ public class GameManagerReadyUpState : BaseState<GameManagerStates, GameManager>
        
     }
 }
+    

@@ -10,12 +10,13 @@ public class GameManagerMatchState : BaseState<GameManagerStates, GameManager>
 
     public override void EnterState()
     {
+        Debug.Log("Game Started!");
         _ctx.MatchTimer.ResetTimer();
     }
 
     public override void ExitState()
     {
-
+        Debug.Log("Game Ended!");
     }
 
     public override void FixedUpdate()

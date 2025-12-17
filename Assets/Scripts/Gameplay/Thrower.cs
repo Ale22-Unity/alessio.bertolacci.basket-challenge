@@ -36,6 +36,7 @@ public class Thrower : MonoBehaviour
             GameClient.Client.EventBus.Subscribe<ThrowBallTestEvent>(On);
             GameClient.Client.EventBus.Subscribe<ResetBallTestEvent>(On);
         }
+        _ball.ResetThrowable(_throwPos);
     }
 
     private void OnDestroy()
@@ -233,5 +234,10 @@ public class Thrower : MonoBehaviour
         }
         await _ball.SimulateThrow(SimulateThrow(dir, throwSpeed, 0.01f), _controller);
         _activeSimulation = false;
+    }
+
+    public void ResetBall()
+    {
+        _ball.ResetThrowable(_throwPos);
     }
 }

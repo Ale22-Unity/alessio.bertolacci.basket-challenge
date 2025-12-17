@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private readonly GameManagerStateFactory _stateFactory = new GameManagerStateFactory();
+    [SerializeField] private GameManagerStateFactory _stateFactory;
     [SerializeField] private List<PlayerData> _playerData = new List<PlayerData>();
     [SerializeField] private List<ScoreEntry> _scores = new List<ScoreEntry>();
     [SerializeField] private ThrowPosition[] _throwPositions;
@@ -17,11 +17,6 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         _stateFactory.InitializeStateManager(this, GameManagerStates.ReadyUp, StateManagerUpdate.Frame);
-    }
-
-    private void Update()
-    {
-        _stateFactory.Update();
     }
 
     public void AddPlayer(IControlThrower player)
@@ -62,6 +57,15 @@ public class GameManager : MonoBehaviour
             }
         }
         await UniTask.WhenAll(throws);
+    }
+
+    public void EndGame()
+    {
+        Debug.Log("end game");
+        if(GameClient.Client != null)
+        {
+            GameClient.Client.EventBus.Fire<GameEndedEvent>(new GameEndedEvent());
+        }
     }
 }
 

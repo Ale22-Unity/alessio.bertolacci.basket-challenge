@@ -1352,6 +1352,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1653286320}
   - component: {fileID: 1653286321}
+  - component: {fileID: 1653286322}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1386,6 +1387,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f3ead0d534c2c64bb0029710a447486, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _stateFactory: {fileID: 1653286322}
   _playerData: []
   _scores:
   - <Category>k__BackingField: 0
@@ -1410,6 +1412,18 @@ MonoBehaviour:
   <MatchTimer>k__BackingField:
     <TimerDurationS>k__BackingField: 120
     _currentTimer: 0
+--- !u!114 &1653286322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1653286319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d4888463ccbe8d41a99bc4fd99362d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1715212518
 GameObject:
   m_ObjectHideFlags: 0

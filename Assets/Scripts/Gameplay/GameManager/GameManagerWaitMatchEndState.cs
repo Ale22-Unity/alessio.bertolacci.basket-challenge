@@ -1,6 +1,5 @@
-using System.Collections;
+using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class GameManagerWaitMatchEndState : BaseState<GameManagerStates, GameManager>
 {
@@ -10,12 +9,12 @@ public class GameManagerWaitMatchEndState : BaseState<GameManagerStates, GameMan
 
     public override void EnterState()
     {
-
+        WaitEndGame().Forget();
     }
 
     public override void ExitState()
     {
-
+        
     }
 
     public override void FixedUpdate()
@@ -36,5 +35,14 @@ public class GameManagerWaitMatchEndState : BaseState<GameManagerStates, GameMan
     public override void OnDestroy()
     {
 
+    }
+
+    private async UniTask WaitEndGame()
+    {
+        List<UniTask> tasks = new List<UniTask>();
+        tasks.Add(UniTask.Delay(3000, false, PlayerLoopTiming.Update, _ctx.destroyCancellationToken));
+        tasks.Add(_ctx.WaitForAllThrows());
+        await UniTask.WhenAll(tasks);
+        _ctx.EndGame();
     }
 }
