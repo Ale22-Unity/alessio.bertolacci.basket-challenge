@@ -13,7 +13,7 @@ public class GameCamera : MonoBehaviour
     private float _rotationSpeed;
     private bool _atPos;
 
-    private void LateUpdate()
+    private void FixedUpdate()
     {
         _atPos = UpdatePosition();
         UpdateRotation();
@@ -23,23 +23,17 @@ public class GameCamera : MonoBehaviour
     private bool UpdatePosition()
     {
         if(_posTarget == null) { return true; }
-        transform.position = Vector3.Lerp(transform.position, _posTarget.position, Time.deltaTime * _moveSpeed);
+        transform.position = Vector3.Lerp(transform.position, _posTarget.position, Time.fixedDeltaTime * _moveSpeed);
         return Vector3.Distance(transform.position, _posTarget.position) > _targetError;
     }
 
     private void UpdateRotation()
     {
         if (_rotTarget == null) { return; }
-        transform.LookAt(_rotTarget, Vector3.up);
+        Vector3 dir = _rotTarget.position - transform.position;
+        Quaternion targetRot = Quaternion.LookRotation(dir, Vector3.up);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.fixedDeltaTime * _rotationSpeed);
     }
-
-    //private void UpdateRotation()
-    //{
-    //    if (_rotTarget == null) { return; }
-    //    Vector3 dir = _rotTarget.position - transform.position;
-    //    Quaternion targetRot = Quaternion.LookRotation(dir, Vector3.up);
-    //    transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.deltaTime * _rotationSpeed);
-    //}
 
     public void SetTarget(Transform posTarget, Transform rotTarget)
     {

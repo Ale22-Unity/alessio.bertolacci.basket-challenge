@@ -9,7 +9,6 @@ public class Thrower : MonoBehaviour
     [SerializeField] private Transform _throwPos;
     [SerializeField] private Ball _ball;
     [Space]
-    [SerializeField] private float _simulatedTimeStep = 0.05f;
     [SerializeField] private int _maxSimulatedSteps = 1000;
     [SerializeField] private LayerMask _simulatedCollisionMask;
     [SerializeField] private float _simulatedElasticlty = 0.7f;
@@ -103,7 +102,7 @@ public class Thrower : MonoBehaviour
         int i = 0;
         while(i < _maxSimulatedSteps)
         {
-            float _accountedTimeStep = _simulatedTimeStep;
+            float _accountedTimeStep = Time.fixedDeltaTime;
             bool bounced = false;
             while (_accountedTimeStep > 0 && i < _maxSimulatedSteps)
             {
@@ -124,7 +123,7 @@ public class Thrower : MonoBehaviour
                     Vector3 projectedDir = Vector3.Project(velocityAtImpact, hit.normal);
                     Vector3 bounceSpeed = ((1f - _simulatedFriction) * (velocityAtImpact - projectedDir)) + (colliderElasticity * _simulatedElasticlty * -projectedDir);
                     dir = bounceSpeed;
-                    steps[i] = new ThrowStep((int)(timeOfImpact * 1000), ballPosAtImpact, scored, GetHitCategory(hit.collider.gameObject));
+                    steps[i] = new ThrowStep(ballPosAtImpact, scored, GetHitCategory(hit.collider.gameObject));
                     i++;
                 }
                 else
@@ -133,7 +132,7 @@ public class Thrower : MonoBehaviour
                     bool scored = CheckForBasket(stepPos, stepPos + deltaPos);
                     stepPos += deltaPos;
                     dir = stepVelocity;
-                    steps[i] = new ThrowStep((int)(_accountedTimeStep * 1000), stepPos, scored, HitCategory.None);
+                    steps[i] = new ThrowStep(stepPos, scored, HitCategory.None);
                     _accountedTimeStep = 0;
                     i++;
                 }
