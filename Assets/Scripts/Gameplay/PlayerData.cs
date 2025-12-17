@@ -16,4 +16,9 @@ public class PlayerData
     {
         Score += amount;
     }
+
+    public PlayerResult GetPlayerResult()
+    {
+        return new PlayerResult(Score, Player.IsOwner);
+    }
 }

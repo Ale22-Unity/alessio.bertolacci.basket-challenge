@@ -63,7 +63,7 @@ public class GameClient : MonoBehaviour
         await CloseMenu(MenuID.HUD);
         await SceneManager.UnloadSceneAsync(GameSceneName);
         RewardMenuUI rewardMenuInstance = Instantiate(rewardMenuPrefab, uiRoot);
-        rewardMenuInstance.Setup(new RewardMenuUIData(StartGame, BackToMainMenu, QuitGame));
+        rewardMenuInstance.Setup(new RewardMenuUIData(StartGame, BackToMainMenu, QuitGame, e.MatchResults));
         activeMenuItems.Add(rewardMenuInstance);
         await rewardMenuInstance.PanelAnimations.Open();
     }

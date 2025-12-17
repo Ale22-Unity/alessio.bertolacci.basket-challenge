@@ -1410,7 +1410,7 @@ MonoBehaviour:
     <TimerDurationS>k__BackingField: 3
     _currentTimer: 0
   <MatchTimer>k__BackingField:
-    <TimerDurationS>k__BackingField: 60
+    <TimerDurationS>k__BackingField: 12
     _currentTimer: 0
 --- !u!114 &1653286322
 MonoBehaviour:

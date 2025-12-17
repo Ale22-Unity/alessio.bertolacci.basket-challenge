@@ -69,7 +69,12 @@ public class GameManager : MonoBehaviour
         Debug.Log("end game");
         if(GameClient.Client != null)
         {
-            GameClient.Client.EventBus.Fire<GameEndedEvent>(new GameEndedEvent());
+            PlayerResult[] results = new PlayerResult[2];
+            for (int i = 0; i < _playerData.Count; i++)
+            {
+                results[i] = _playerData[i].GetPlayerResult();
+            }
+            GameClient.Client.EventBus.Fire<GameEndedEvent>(new GameEndedEvent(results));
         }
     }
 }

@@ -1,4 +1,6 @@
 using Cysharp.Threading.Tasks;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +12,8 @@ public class RewardMenuUI : MonoBehaviour, IMenuUI
     [SerializeField] private Button _mainMenuBt;
     [SerializeField] private Button _playAgainBt;
     [SerializeField] private Button _quitBt;
+    [SerializeField] private TMP_Text _scoreText;
+    [SerializeField] private string _scoredString = "you scored {0} points";
     public IAnimatedPanel PanelAnimations => _panelAnimations;
     public MenuID MenuID => menuId;
 
@@ -23,6 +27,8 @@ public class RewardMenuUI : MonoBehaviour, IMenuUI
             _playAgainBt.onClick.AddListener(() => rewardMenuData.RestartGame().Forget());
             _quitBt.onClick.RemoveAllListeners();
             _quitBt.onClick.AddListener(() => rewardMenuData.QuitGame());
+            PlayerResult ownerResult = GetOwnerResult(rewardMenuData.Results);
+            _scoreText.text = string.Format(_scoredString, ownerResult.Score);
         }
     }
 
@@ -31,4 +37,12 @@ public class RewardMenuUI : MonoBehaviour, IMenuUI
         Destroy(gameObject);
     }
 
+    private PlayerResult GetOwnerResult(PlayerResult[] results)
+    {
+        foreach (PlayerResult result in results)
+        {
+            if (result.IsOwner) { return result; }
+        }
+        return results[0];
+    }
 }
