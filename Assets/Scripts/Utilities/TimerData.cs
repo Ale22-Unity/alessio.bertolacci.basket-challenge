@@ -7,6 +7,8 @@ public class TimerData
     [SerializeField] private float _currentTimer = 0;
 
     public float CurrentTimer => _currentTimer;
+    public float InvertedTimer => TimerDurationS - _currentTimer;
+    public float TimerPerc => _currentTimer / TimerDurationS;
 
     public void UpdateTimer(float deltaTime)
     {

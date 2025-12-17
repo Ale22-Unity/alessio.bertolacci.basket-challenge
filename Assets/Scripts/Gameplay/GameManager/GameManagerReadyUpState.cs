@@ -15,7 +15,7 @@ public class GameManagerReadyUpState : BaseState<GameManagerStates, GameManager>
     {
         _ctx.ReadyUpTimer.ResetTimer();
         _timerEnded = _ctx.ReadyUpTimer.TimerEnded();
-        _timerInt = (int)_ctx.ReadyUpTimer.TimerDurationS - (int)_ctx.ReadyUpTimer.CurrentTimer;
+        _timerInt = (int)_ctx.ReadyUpTimer.InvertedTimer;
         if (GameClient.Client != null)
         {
             GameClient.Client.EventBus.Fire<ReadyUpTimerEvent>(new ReadyUpTimerEvent(TimerEventCategory.Started, _timerInt));
@@ -35,7 +35,7 @@ public class GameManagerReadyUpState : BaseState<GameManagerStates, GameManager>
     public override void FrameUpdate()
     {
         _ctx.ReadyUpTimer.UpdateTimer(Time.deltaTime);
-        int tepTimerInt = (int)_ctx.ReadyUpTimer.TimerDurationS - (int)_ctx.ReadyUpTimer.CurrentTimer;
+        int tepTimerInt = (int)_ctx.ReadyUpTimer.InvertedTimer;
         if (_ctx.ReadyUpTimer.TimerEnded())
         {
             _timerEnded = true;

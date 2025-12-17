@@ -43,6 +43,11 @@ public class GameManager : MonoBehaviour
         if(data == null) { return 0; }
         ScoreEntry selectedScore = _scores.FirstOrDefault(e => e.Category == category);
         data.AddScore(selectedScore.ScoreAmount);
+        if (GameClient.Client != null)
+        {
+            GameClient.Client.EventBus.Fire<ScoreAddedEvent>(
+                new ScoreAddedEvent(selectedScore.ScoreAmount, data.Score, player.IsOwner));
+        }
         return selectedScore.ScoreAmount;
     }
 

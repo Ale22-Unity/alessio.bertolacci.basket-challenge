@@ -12,6 +12,10 @@ public class GameManagerMatchState : BaseState<GameManagerStates, GameManager>
     {
         Debug.Log("Game Started!");
         _ctx.MatchTimer.ResetTimer();
+        if(GameClient.Client != null)
+        {
+            GameClient.Client.EventBus.Fire<MatchStartedEvent>(new MatchStartedEvent(_ctx.MatchTimer));
+        }
     }
 
     public override void ExitState()

@@ -8,4 +8,5 @@ public interface IControlThrower
     public bool TryAssignThrowerToPos(ThrowPosition position);
     public void ScoredPoints(ScoreCategory score);
     public bool IsPlayerThrowing(out UniTask throwTask);
+    public bool IsOwner {  get; }
 }

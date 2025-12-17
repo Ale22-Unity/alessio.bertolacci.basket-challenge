@@ -1,7 +1,4 @@
 using Cysharp.Threading.Tasks;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerControl : MonoBehaviour, IControlThrower
@@ -15,6 +12,8 @@ public class PlayerControl : MonoBehaviour, IControlThrower
     [SerializeField] private float _cameraRotSpeed = 100f;
     private bool _waitingThrow = false;
     private UniTask _throw;
+
+    public bool IsOwner => true;
 
     private void Start()
     {
