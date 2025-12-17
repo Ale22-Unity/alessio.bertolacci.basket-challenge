@@ -1,15 +1,28 @@
+using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    private readonly GameManagerStateFactory _stateFactory = new GameManagerStateFactory();
     [SerializeField] private List<PlayerData> _playerData = new List<PlayerData>();
     [SerializeField] private List<ScoreEntry> _scores = new List<ScoreEntry>();
     [SerializeField] private ThrowPosition[] _throwPositions;
-    [SerializeField] private bool _gameStarted = true;
+    [field: SerializeField] public TimerData ReadyUpTimer { get; private set; }
+    [field: SerializeField] public TimerData MatchTimer { get; private set; }
 
-    public bool GameStarted => _gameStarted;
+    public bool GameStarted => _stateFactory.GetCurrentState() == GameManagerStates.Match;
+
+    private void Start()
+    {
+        _stateFactory.InitializeStateManager(this, GameManagerStates.ReadyUp, StateManagerUpdate.Frame);
+    }
+
+    private void Update()
+    {
+        _stateFactory.Update();
+    }
 
     public void AddPlayer(IControlThrower player)
     {
@@ -36,6 +49,19 @@ public class GameManager : MonoBehaviour
         ScoreEntry selectedScore = _scores.FirstOrDefault(e => e.Category == category);
         data.AddScore(selectedScore.ScoreAmount);
         return selectedScore.ScoreAmount;
+    }
+
+    public async UniTask WaitForAllThrows()
+    {
+        List<UniTask> throws = new List<UniTask>();
+        foreach(PlayerData player in _playerData)
+        {
+            if(player.Player.IsPlayerThrowing(out UniTask ballThrow))
+            {
+                throws.Add(ballThrow);
+            }
+        }
+        await UniTask.WhenAll(throws);
     }
 }
 

@@ -14,6 +14,7 @@ public class PlayerControl : MonoBehaviour, IControlThrower
     [SerializeField] private float _cameraMoveSpeed = 2f;
     [SerializeField] private float _cameraRotSpeed = 100f;
     private bool _waitingThrow = false;
+    private UniTask _throw;
 
     private void Start()
     {
@@ -41,7 +42,8 @@ public class PlayerControl : MonoBehaviour, IControlThrower
 
     private void On(SwipeEndedEvent e)
     {
-        ThrowBall(e.SwipeInput.ThrowStrenghtPerc).Forget();
+        _throw = ThrowBall(e.SwipeInput.ThrowStrenghtPerc);
+        _throw.Forget();
     }
 
     private async UniTask ThrowBall(float perc)
@@ -76,5 +78,11 @@ public class PlayerControl : MonoBehaviour, IControlThrower
         {
             int addedPoints = _gameManager.AddScore(score, this);
         }
+    }
+
+    public bool IsPlayerThrowing(out UniTask throwTask)
+    {
+        throwTask = _throw;
+        return _waitingThrow;
     }
 }

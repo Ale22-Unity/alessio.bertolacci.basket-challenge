@@ -1404,7 +1404,12 @@ MonoBehaviour:
   - {fileID: 758624270}
   - {fileID: 1517585561}
   - {fileID: 1813759437}
-  _gameStarted: 1
+  <ReadyUpTimer>k__BackingField:
+    <TimerDurationS>k__BackingField: 3
+    _currentTimer: 0
+  <MatchTimer>k__BackingField:
+    <TimerDurationS>k__BackingField: 120
+    _currentTimer: 0
 --- !u!1 &1715212518
 GameObject:
   m_ObjectHideFlags: 0
@@ -2032,7 +2037,6 @@ MonoBehaviour:
   _target: {fileID: 1911732301}
   _throwPos: {fileID: 980833987}
   _ball: {fileID: 1924897615}
-  _simulatedTimeStep: 0.02
   _maxSimulatedSteps: 200
   _simulatedCollisionMask:
     serializedVersion: 2
@@ -2065,7 +2069,7 @@ MonoBehaviour:
   _cameraTargetThrow: {fileID: 1715212519}
   _errorMarginPerc: 0.1
   _cameraMoveSpeed: 2
-  _cameraRotSpeed: 50
+  _cameraRotSpeed: 5
 --- !u!1001 &2078707712
 PrefabInstance:
   m_ObjectHideFlags: 0
