@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
         if(data == null) { return 0; }
         ScoreEntry selectedScore = _scores.FirstOrDefault(e => e.Category == category);
         int scoreAdded = selectedScore.ScoreAmount;
-        if (BBBonusManager.Active)
+        if (BBBonusManager.Active && selectedScore.Category == ScoreCategory.BB)
         {
             scoreAdded = BBBonusManager.ActiveBBBonusData.ScoreBonus;
         }
