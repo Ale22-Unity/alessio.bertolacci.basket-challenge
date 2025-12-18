@@ -1322,7 +1322,7 @@ MonoBehaviour:
   _stateManager: {fileID: 844686082}
   _thrower: {fileID: 844686084}
   _gameManager: {fileID: 1653286321}
-  _errorMargin: 0.1
+  _errorMargin: 0.35
   <MinCooldown>k__BackingField: 1
   <MaxCooldown>k__BackingField: 3
 --- !u!114 &844686084
@@ -1347,6 +1347,7 @@ MonoBehaviour:
     m_Bits: 55
   _simulatedElasticlty: 0.6
   _simulatedFriction: 0.2
+  _basketSpeedReduction: 0.15
   _backboardTag: BackBoard
   _ringTag: Ring
   _basketLayer:
@@ -3014,6 +3015,7 @@ MonoBehaviour:
     m_Bits: 55
   _simulatedElasticlty: 0.6
   _simulatedFriction: 0.2
+  _basketSpeedReduction: 0.15
   _backboardTag: BackBoard
   _ringTag: Ring
   _basketLayer:

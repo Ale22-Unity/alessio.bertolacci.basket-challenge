@@ -13,6 +13,7 @@ public class Thrower : MonoBehaviour
     [SerializeField] private LayerMask _simulatedCollisionMask;
     [SerializeField] private float _simulatedElasticlty = 0.7f;
     [SerializeField] private float _simulatedFriction = 0.1f;
+    [SerializeField] private float _basketSpeedReduction = 0.35f;
     [Space]
     [SerializeField] private string _backboardTag = "BackBoard";
     [SerializeField] private string _ringTag = "Ring";
@@ -123,7 +124,7 @@ public class Thrower : MonoBehaviour
                     Vector3 velocityAtImpact = stepVelocity + Physics.gravity * timeOfImpact;
                     Vector3 projectedDir = Vector3.Project(velocityAtImpact, hit.normal);
                     Vector3 bounceSpeed = ((1f - _simulatedFriction) * (velocityAtImpact - projectedDir)) + (colliderElasticity * _simulatedElasticlty * -projectedDir);
-                    dir = bounceSpeed;
+                    dir = scored ? (bounceSpeed * _basketSpeedReduction) : bounceSpeed;
                     steps[i] = new ThrowStep(ballPosAtImpact, scored, GetHitCategory(hit.collider.gameObject));
                     i++;
                 }
@@ -132,7 +133,7 @@ public class Thrower : MonoBehaviour
                     Debug.DrawLine(stepPos, stepPos + deltaPos, bounced? Color.green : Color.red, duration);
                     bool scored = CheckForBasket(stepPos, stepPos + deltaPos);
                     stepPos += deltaPos;
-                    dir = stepVelocity;
+                    dir = scored ? (stepVelocity * _basketSpeedReduction) : stepVelocity;
                     steps[i] = new ThrowStep(stepPos, scored, HitCategory.None);
                     _accountedTimeStep = 0;
                     i++;
