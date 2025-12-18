@@ -1288,6 +1288,7 @@ GameObject:
   - component: {fileID: 844686084}
   - component: {fileID: 844686083}
   - component: {fileID: 844686082}
+  - component: {fileID: 844686086}
   m_Layer: 0
   m_Name: PlayerRemote
   m_TagString: Untagged
@@ -1356,6 +1357,7 @@ MonoBehaviour:
   _assignedPos: {fileID: 1517585561}
   _maxSpeed: 11
   _minSpeed: 10.5
+  _fireballModule: {fileID: 844686086}
 --- !u!4 &844686085
 Transform:
   m_ObjectHideFlags: 0
@@ -1376,6 +1378,20 @@ Transform:
   - {fileID: 1465929247}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &844686086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 844686081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50dac9a95f7b29d498cad005412e1f1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _consecutiveThrowsAmount: 5
+  _fireballDuration: 8
 --- !u!1 &881163262
 GameObject:
   m_ObjectHideFlags: 0
@@ -2019,7 +2035,7 @@ MonoBehaviour:
     <TimerDurationS>k__BackingField: 3
     _currentTimer: 0
   <MatchTimer>k__BackingField:
-    <TimerDurationS>k__BackingField: 12
+    <TimerDurationS>k__BackingField: 120
     _currentTimer: 0
 --- !u!114 &1653286322
 MonoBehaviour:
@@ -2966,6 +2982,7 @@ GameObject:
   - component: {fileID: 2034642710}
   - component: {fileID: 2034642711}
   - component: {fileID: 2034642712}
+  - component: {fileID: 2034642713}
   m_Layer: 0
   m_Name: PlayerOwner
   m_TagString: Untagged
@@ -3024,6 +3041,7 @@ MonoBehaviour:
   _assignedPos: {fileID: 1517585561}
   _maxSpeed: 11
   _minSpeed: 10.5
+  _fireballModule: {fileID: 2034642713}
 --- !u!114 &2034642712
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3043,6 +3061,20 @@ MonoBehaviour:
   _errorMarginPerc: 0.1
   _cameraMoveSpeed: 2
   _cameraRotSpeed: 5
+--- !u!114 &2034642713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2034642706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50dac9a95f7b29d498cad005412e1f1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _consecutiveThrowsAmount: 5
+  _fireballDuration: 8
 --- !u!1001 &2078707712
 PrefabInstance:
   m_ObjectHideFlags: 0

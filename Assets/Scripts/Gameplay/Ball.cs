@@ -11,10 +11,11 @@ public class Ball : MonoBehaviour, IThrowable
         transform.position = resetPos.position;
     }
 
-    public async UniTask SimulateThrow(ThrowStep[] steps, IControlThrower thrower)
+    public async UniTask<bool> SimulateThrow(ThrowStep[] steps, IControlThrower thrower)
     {
         bool bbHit = false;
         bool ringHit = false;
+        bool scored = false;
 
         foreach(ThrowStep step in steps)
         {
@@ -30,9 +31,11 @@ public class Ball : MonoBehaviour, IThrowable
             if (step.Scored)
             {
                 AddScore(bbHit, ringHit, thrower);
+                scored = true;
             }
             await UniTask.Yield(PlayerLoopTiming.FixedUpdate, gameObject.GetCancellationTokenOnDestroy());
         }
+        return scored;
     }
 
     private void AddScore(bool bbHit, bool ringHit, IControlThrower player)

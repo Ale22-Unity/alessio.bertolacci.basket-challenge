@@ -32,7 +32,7 @@ public class AIControl : MonoBehaviour, IControlThrower
     {
         if (_gameManager != null)
         {
-            _gameManager.AddScore(score, this);
+            _gameManager.AddScore(score, this, _thrower.FireBallActive);
         }
     }
 

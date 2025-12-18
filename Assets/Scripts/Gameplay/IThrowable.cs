@@ -4,5 +4,5 @@ using UnityEngine;
 public interface IThrowable
 {
     public void ResetThrowable(Transform position);
-    public UniTask SimulateThrow(ThrowStep[] steps, IControlThrower thrower);
+    public UniTask<bool> SimulateThrow(ThrowStep[] steps, IControlThrower thrower);
 }

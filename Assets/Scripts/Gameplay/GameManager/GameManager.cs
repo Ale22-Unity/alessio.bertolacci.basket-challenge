@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public int AddScore(ScoreCategory category, IControlThrower player)
+    public int AddScore(ScoreCategory category, IControlThrower player, bool fireBall)
     {
         PlayerData data = _playerData.FirstOrDefault((p) => p.Player == player);
         if(data == null) { return 0; }
@@ -48,6 +48,7 @@ public class GameManager : MonoBehaviour
         {
             scoreAdded = BBBonusManager.ActiveBBBonusData.ScoreBonus;
         }
+        scoreAdded = fireBall ? scoreAdded *= 2 : scoreAdded;
         data.AddScore(scoreAdded);
         if (GameClient.Client != null)
         {
