@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class BackboardBonusEvent : MonoBehaviour
+public class BackboardBonusEvent
 {
     public readonly bool Started = false;
     public readonly int ScoreBonus = 0;
