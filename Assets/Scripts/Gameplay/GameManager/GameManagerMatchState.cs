@@ -31,6 +31,7 @@ public class GameManagerMatchState : BaseState<GameManagerStates, GameManager>
     public override void FrameUpdate()
     {
         _ctx.MatchTimer.UpdateTimer(Time.deltaTime);
+        _ctx.BBBonusManager.UpdateBBBonus();
     }
 
     public override GameManagerStates GetNextState()

@@ -8,5 +8,10 @@ public static class Utils
     {
         return (target > minValue && target < maxValue);
     }
+
+    public static bool BetweenValuesCheck(int minValue, int maxValue, int target)
+    {
+        return (target >= minValue && target < maxValue);
+    }
 }
 

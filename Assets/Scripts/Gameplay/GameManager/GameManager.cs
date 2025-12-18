@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<PlayerData> _playerData = new List<PlayerData>();
     [SerializeField] private List<ScoreEntry> _scores = new List<ScoreEntry>();
     [SerializeField] private ThrowPosition[] _throwPositions;
+    [field: SerializeField] public BackboardBonusManager BBBonusManager {  get; private set; }
     [field: SerializeField] public TimerData ReadyUpTimer { get; private set; }
     [field: SerializeField] public TimerData MatchTimer { get; private set; }
 
@@ -42,13 +43,18 @@ public class GameManager : MonoBehaviour
         PlayerData data = _playerData.FirstOrDefault((p) => p.Player == player);
         if(data == null) { return 0; }
         ScoreEntry selectedScore = _scores.FirstOrDefault(e => e.Category == category);
-        data.AddScore(selectedScore.ScoreAmount);
+        int scoreAdded = selectedScore.ScoreAmount;
+        if (BBBonusManager.Active)
+        {
+            scoreAdded = BBBonusManager.ActiveBBBonusData.ScoreBonus;
+        }
+        data.AddScore(scoreAdded);
         if (GameClient.Client != null)
         {
             GameClient.Client.EventBus.Fire<ScoreAddedEvent>(
-                new ScoreAddedEvent(selectedScore.ScoreAmount, data.Score, player.IsOwner));
+                new ScoreAddedEvent(scoreAdded, data.Score, player.IsOwner));
         }
-        return selectedScore.ScoreAmount;
+        return scoreAdded;
     }
 
     public async UniTask WaitForAllThrows()
