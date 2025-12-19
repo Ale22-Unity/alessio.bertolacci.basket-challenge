@@ -72,6 +72,7 @@ public class SwipeInput
     public Vector3 EndPosition { get; private set; }
     public Vector3 CurrentPosition { get; private set; }
     private float _maxDeltaY;
+    private float _lastDeltaY;
 
     public void SetStartValues(Vector3 position, float startTime, int screenHeight, float screenPerc)
     {
@@ -86,6 +87,7 @@ public class SwipeInput
     public void SetEndValues(Vector3 position)
     {
         EndPosition = position;
+        CurrentPosition = position;
         CalculateThrowStrenght();
     }
 
@@ -98,7 +100,8 @@ public class SwipeInput
     private void CalculateThrowStrenght()
     {
         float deltaY = Mathf.Abs(StartPosition.y - CurrentPosition.y);
-        deltaY = Mathf.Clamp(deltaY, 0, _maxDeltaY);
-        ThrowStrenghtPerc = deltaY / _maxDeltaY;
+        _lastDeltaY = deltaY < _lastDeltaY ? _lastDeltaY : deltaY;
+        _lastDeltaY = Mathf.Clamp(_lastDeltaY, 0, _maxDeltaY);
+        ThrowStrenghtPerc = _lastDeltaY / _maxDeltaY;
     }
 }
