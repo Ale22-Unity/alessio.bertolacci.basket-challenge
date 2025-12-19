@@ -5,6 +5,7 @@ using UnityEngine;
 
 public interface IControlThrower
 {
+    public FireBallModule FireballModule { get; }
     public bool TryAssignThrowerToPos(ThrowPosition position);
     public void ScoredPoints(ScoreCategory score);
     public bool IsPlayerThrowing(out UniTask throwTask);

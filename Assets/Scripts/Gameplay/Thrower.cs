@@ -28,7 +28,6 @@ public class Thrower : MonoBehaviour
     private bool _dynamicSimulation;
     private bool _activeSimulation;
 
-    public bool FireBallActive => _fireballModule != null ? _fireballModule.OnFire : false;
     public Transform BallCameraTarget => _ball.transform;
 
     private void Awake()
@@ -237,11 +236,6 @@ public class Thrower : MonoBehaviour
             dir = _assignedPos.BBThrow.Direction;
         }
         bool scored = await _ball.SimulateThrow(SimulateThrow(dir, throwSpeed, 0.01f), _controller);
-        if(_fireballModule != null)
-        {
-            if (scored) { _fireballModule.AddToFireBall(); }
-            else { _fireballModule.ResetFireBall(); }
-        }
         _activeSimulation = false;
     }
 

@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _filler: {fileID: 3486697774482997222}
-  _fillSpeed: 1
+  _fillSpeed: 10
 --- !u!1 &120098423793449114
 GameObject:
   m_ObjectHideFlags: 0

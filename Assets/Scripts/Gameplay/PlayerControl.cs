@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour, IControlThrower
 {
+    [SerializeField] private FireBallModule _fireballModule;
     [SerializeField] private Thrower _thrower;
     [SerializeField] private GameManager _gameManager;
     [SerializeField] private Transform _cameraTarget;
@@ -14,11 +15,13 @@ public class PlayerControl : MonoBehaviour, IControlThrower
     private UniTask _throw;
 
     public bool IsOwner => true;
+    public FireBallModule FireballModule => _fireballModule;
 
     private void Start()
     {
         if (_gameManager != null)
         {
+            _fireballModule.Setup(IsOwner);
             _gameManager.AddPlayer(this);
         }
     }
@@ -76,7 +79,7 @@ public class PlayerControl : MonoBehaviour, IControlThrower
     {
         if(_gameManager != null)
         {
-            int addedPoints = _gameManager.AddScore(score, this, _thrower.FireBallActive);
+            int addedPoints = _gameManager.AddScore(score, this, _fireballModule.OnFire);
         }
     }
 

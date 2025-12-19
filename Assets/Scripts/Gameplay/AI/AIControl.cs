@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class AIControl : MonoBehaviour, IControlThrower
 {
+    [SerializeField] private FireBallModule _fireballModule;
     [SerializeField] private AIPlayerStateManager _stateManager;
     [SerializeField] private Thrower _thrower;
     [SerializeField] private GameManager _gameManager;
@@ -15,6 +16,7 @@ public class AIControl : MonoBehaviour, IControlThrower
     private UniTask _throw;
     public bool IsOwner => false;
     public bool CanThrow => _gameManager.GameStarted;
+    public FireBallModule FireballModule => _fireballModule;
 
     private void Start()
     {
@@ -32,7 +34,7 @@ public class AIControl : MonoBehaviour, IControlThrower
     {
         if (_gameManager != null)
         {
-            _gameManager.AddScore(score, this, _thrower.FireBallActive);
+            _gameManager.AddScore(score, this, _fireballModule.OnFire);
         }
     }
 
