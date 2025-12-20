@@ -79,7 +79,7 @@ public class PlayerControl : MonoBehaviour, IControlThrower
     {
         if(_gameManager != null)
         {
-            int addedPoints = _gameManager.AddScore(score, this, _fireballModule.OnFire);
+            int addedPoints = _gameManager.AddScore(score, this, _thrower.BallCameraTarget.position);
         }
     }
 

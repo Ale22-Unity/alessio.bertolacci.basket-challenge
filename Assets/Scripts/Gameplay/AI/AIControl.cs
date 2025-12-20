@@ -34,7 +34,7 @@ public class AIControl : MonoBehaviour, IControlThrower
     {
         if (_gameManager != null)
         {
-            _gameManager.AddScore(score, this, _fireballModule.OnFire);
+            _gameManager.AddScore(score, this, _thrower.BallCameraTarget.position);
         }
     }
 

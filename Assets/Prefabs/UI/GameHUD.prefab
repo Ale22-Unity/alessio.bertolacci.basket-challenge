@@ -783,9 +783,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 25, y: -25}
+  m_AnchoredPosition: {x: 125, y: -125}
   m_SizeDelta: {x: 200, y: 200}
-  m_Pivot: {x: 0, y: 1}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5384163312057243414
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -806,9 +806,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 608c04767e52b5a4286148034b746a0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _onFireText: On Fire!<br>
+  _categories:
+  - <Category>k__BackingField: 0
+    <Text>k__BackingField: 
+    <Color>k__BackingField: {r: 1, g: 0.597294, b: 0, a: 1}
+  - <Category>k__BackingField: 1
+    <Text>k__BackingField: Backboard<br>
+    <Color>k__BackingField: {r: 1, g: 0.59607846, b: 0, a: 1}
+  - <Category>k__BackingField: 2
+    <Text>k__BackingField: Perfect!<br>
+    <Color>k__BackingField: {r: 0.60057056, g: 1, b: 0, a: 1}
   forOwner: 1
   _timerBG: {fileID: 4137316788102587780}
   _scoreText: {fileID: 6187631182670584672}
+  _scoredParticleDesign: {fileID: 11400000, guid: 935d4926379bef644b81d172d6bb232f,
+    type: 2}
 --- !u!1 &1986176053110866460
 GameObject:
   m_ObjectHideFlags: 0
@@ -1237,9 +1250,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 608c04767e52b5a4286148034b746a0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _onFireText: On Fire!<br>
+  _categories: []
   forOwner: 0
   _timerBG: {fileID: 4640742515808204452}
   _scoreText: {fileID: 2760749109482541575}
+  _scoredParticleDesign: {fileID: 11400000, guid: 935d4926379bef644b81d172d6bb232f,
+    type: 2}
 --- !u!1 &4871380190310633596
 GameObject:
   m_ObjectHideFlags: 0

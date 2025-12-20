@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public int AddScore(ScoreCategory category, IControlThrower player, bool fireBall)
+    public int AddScore(ScoreCategory category, IControlThrower player, Vector3 ballPos)
     {
         PlayerData data = _playerData.FirstOrDefault((p) => p.Player == player);
         if(data == null) { return 0; }
@@ -48,12 +48,13 @@ public class GameManager : MonoBehaviour
         {
             scoreAdded = BBBonusManager.ActiveBBBonusData.ScoreBonus;
         }
-        scoreAdded = fireBall ? scoreAdded *= 2 : scoreAdded;
+        bool onFire = player.FireballModule.OnFire;
+        scoreAdded = onFire ? scoreAdded *= 2 : scoreAdded;
         data.AddScore(scoreAdded);
         if (GameClient.Client != null)
         {
             GameClient.Client.EventBus.Fire<ScoreAddedEvent>(
-                new ScoreAddedEvent(scoreAdded, data.Score, player.IsOwner));
+                new ScoreAddedEvent(scoreAdded, data.Score, player.IsOwner, ballPos, onFire, category));
         }
         return scoreAdded;
     }
