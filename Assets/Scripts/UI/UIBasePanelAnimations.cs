@@ -13,11 +13,13 @@ public class UIBasePanelAnimations : MonoBehaviour, IAnimatedPanel
     public void SetOpenImmediately()
     {
         _panelAnimator.Play(_openAnimStateName);
+        _panelAnimator.SetBool(_openAnimBool, true);
     }
 
     public void SetClosedImmediately()
     {
         _panelAnimator.Play(_closeAnimStateName);
+        _panelAnimator.SetBool(_openAnimBool, false);
     }
 
     public async UniTask Open()

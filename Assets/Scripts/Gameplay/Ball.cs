@@ -49,12 +49,22 @@ public class Ball : MonoBehaviour, IThrowable
     private void AddScore(bool bbHit, bool ringHit, IControlThrower player)
     {
         if(player == null) { return; }
+        if (bbHit) 
+        { 
+            player.ScoredPoints(ScoreCategory.BB); 
+        }
+        else if (ringHit) 
+        { 
+            player.ScoredPoints(ScoreCategory.Normal); 
+        }
+        else
+        {
+            player.ScoredPoints(ScoreCategory.Clean);
+        }
         if (player.FireballModule != null)
         {
             player.FireballModule.AddToFireBall();
         }
-        if (bbHit) { player.ScoredPoints(ScoreCategory.BB); return; }
-        if (ringHit) { player.ScoredPoints(ScoreCategory.Normal); return; }
-        player.ScoredPoints(ScoreCategory.Clean);
+
     }
 }
