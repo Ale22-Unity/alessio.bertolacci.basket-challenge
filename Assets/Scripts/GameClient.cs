@@ -8,6 +8,7 @@ public class GameClient : MonoBehaviour
     public static GameClient Client;
 
     [SerializeField] private string GameSceneName = "GameScene";
+    [SerializeField] private string MainMenuSceneName = "MainMenu";
     [SerializeField] private Transform uiRoot;
     [SerializeField] private MainMenuUI mainMenuPrefab;
     [SerializeField] private GameHUD gameHUDPrefab;
@@ -45,6 +46,7 @@ public class GameClient : MonoBehaviour
 
     private async UniTask StartGame()
     {
+        await SceneManager.UnloadSceneAsync(MainMenuSceneName);
         await CloseMenu(MenuID.Reward);
         await CloseMenu(MenuID.MainMenu);
         GameHUD gameHUDInstance = Instantiate(gameHUDPrefab, uiRoot);
@@ -73,6 +75,7 @@ public class GameClient : MonoBehaviour
         MainMenuUI mainMenuInstance = Instantiate(mainMenuPrefab, uiRoot);
         mainMenuInstance.Setup(new MainMenuUIData(StartGame, QuitGame));
         activeMenuItems.Add(mainMenuInstance);
+        await SceneManager.LoadSceneAsync(MainMenuSceneName, LoadSceneMode.Additive);
         await mainMenuInstance.PanelAnimations.Open();
     }
 
