@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using System;
 using UnityEngine;
 
 public class PlayerControl : MonoBehaviour, IControlThrower
@@ -13,6 +14,7 @@ public class PlayerControl : MonoBehaviour, IControlThrower
     [SerializeField] private float _cameraRotSpeed = 100f;
     private bool _waitingThrow = false;
     private UniTask _throw;
+    private bool _validSwipe = false;
 
     public bool IsOwner => true;
     public FireBallModule FireballModule => _fireballModule;
@@ -30,6 +32,7 @@ public class PlayerControl : MonoBehaviour, IControlThrower
     {
         if(GameClient.Client != null)
         {
+            GameClient.Client.EventBus.Subscribe<SwipeStartedEvent>(On);
             GameClient.Client.EventBus.Subscribe<SwipeEndedEvent>(On);
         }
     }
@@ -38,7 +41,20 @@ public class PlayerControl : MonoBehaviour, IControlThrower
     {
         if (GameClient.Client != null)
         {
+            GameClient.Client.EventBus.Unsubscribe<SwipeStartedEvent>(On);
             GameClient.Client.EventBus.Unsubscribe<SwipeEndedEvent>(On);
+        }
+    }
+
+    private void On(SwipeStartedEvent e)
+    {
+        _validSwipe = false;
+        if (_waitingThrow) { return; }
+        if (!_gameManager.GameStarted) { return; }
+        _validSwipe = true;
+        if (GameClient.Client != null)
+        {
+            GameClient.Client.EventBus.Fire<ValidSwipeStartedEvent>(new ValidSwipeStartedEvent(e.SwipeInput));
         }
     }
 
@@ -50,8 +66,7 @@ public class PlayerControl : MonoBehaviour, IControlThrower
 
     private async UniTask ThrowBall(float perc)
     {
-        if (_waitingThrow) { return; }
-        if (!_gameManager.GameStarted) { Debug.Log("Game not started"); return; }
+        if (!_validSwipe) { return; }
         _waitingThrow = true;
         if (GameClient.Client != null)
         {

@@ -17,7 +17,7 @@ public class ShotPowerBar : MonoBehaviour
         _powerIndicator.gameObject.SetActive(false);
         if (GameClient.Client != null)
         {
-            GameClient.Client.EventBus.Subscribe<SwipeStartedEvent>(On);
+            GameClient.Client.EventBus.Subscribe<ValidSwipeStartedEvent>(On);
             GameClient.Client.EventBus.Subscribe<SwipeEndedEvent>(On);
             GameClient.Client.EventBus.Subscribe<PlayerAssignedAtPositionEvent>(On);
         }
@@ -27,7 +27,7 @@ public class ShotPowerBar : MonoBehaviour
     {
         if(GameClient.Client != null)
         {
-            GameClient.Client.EventBus.Unsubscribe<SwipeStartedEvent>(On);
+            GameClient.Client.EventBus.Unsubscribe<ValidSwipeStartedEvent>(On);
             GameClient.Client.EventBus.Unsubscribe<SwipeEndedEvent>(On);
             GameClient.Client.EventBus.Unsubscribe<PlayerAssignedAtPositionEvent>(On);
         }
@@ -75,7 +75,7 @@ public class ShotPowerBar : MonoBehaviour
         HideIndicator();
     }
 
-    private void On(SwipeStartedEvent e)
+    private void On(ValidSwipeStartedEvent e)
     {
         ShowIndicator();
         _currentSwipe = e.SwipeInput;
