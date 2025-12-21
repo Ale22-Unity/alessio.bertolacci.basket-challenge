@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour, IThrowable
 {
+    [SerializeField] private GameObject _ballOnFireEffect;
     [SerializeField] private MeshRenderer _renderer;
     [SerializeField] private Material _onFireMaterial;
     [SerializeField] private Material _normalMaterial;
@@ -16,6 +17,7 @@ public class Ball : MonoBehaviour, IThrowable
 
     public async UniTask<bool> SimulateThrow(ThrowStep[] steps, IControlThrower thrower)
     {
+        _ballOnFireEffect.SetActive(thrower.FireballModule.OnFire);
         _renderer.material = thrower.FireballModule.OnFire ? _onFireMaterial : _normalMaterial;
         bool bbHit = false;
         bool ringHit = false;
