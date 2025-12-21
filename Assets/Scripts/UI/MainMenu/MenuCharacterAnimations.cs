@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterAnimations : MonoBehaviour
+public class MenuCharacterAnimations : MonoBehaviour
 {
     [SerializeField] private Animator _anim;
     [SerializeField] private string _startingAnimBool = "";
