@@ -38,6 +38,7 @@ public class Thrower : MonoBehaviour
             GameClient.Client.EventBus.Subscribe<ThrowBallTestEvent>(On);
             GameClient.Client.EventBus.Subscribe<ResetBallTestEvent>(On);
         }
+        _ball.Setup(_controller.IsOwner);
         _ball.ResetThrowable(_throwPos);
     }
 

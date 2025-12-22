@@ -5,9 +5,8 @@ using UnityEngine;
 
 public interface IControlThrower
 {
-    public FireBallModule FireballModule { get; }
     public bool TryAssignThrowerToPos(ThrowPosition position);
-    public void ScoredPoints(ScoreCategory score);
+    public void ScoredPoints(ScoreCategory score, bool onFire);
     public bool IsPlayerThrowing(out UniTask throwTask);
     public void SetCameraToThrowTarget();
     public bool IsOwner {  get; }

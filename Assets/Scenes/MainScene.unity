@@ -540,6 +540,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameSceneName: GameScene
+  MainMenuSceneName: MainMenu
   uiRoot: {fileID: 691141175}
   mainMenuPrefab: {fileID: 3994076296211073896, guid: 04c667201d3cce84db45935a26a24a2a,
     type: 3}
@@ -696,8 +697,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15a49458e6f543d43aad804ed292eb12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxSwipeDurationSec: 3
-  _screenMutiplier: 0.7
+  _maxSwipeDurationSec: 1
+  _screenMutiplier: 0.5
 --- !u!4 &482509868
 Transform:
   m_ObjectHideFlags: 0

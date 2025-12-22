@@ -1,12 +1,11 @@
 using Cysharp.Threading.Tasks;
-using Unity.VisualScripting;
+
 using UnityEngine;
 
 public class Ball : MonoBehaviour, IThrowable
 {
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip _impact;
-    [SerializeField] private AudioClip _bbImpact;
     [SerializeField] private AudioClip _ringImpact;
     [Space]
     [SerializeField] private GameObject _ballOnFireEffect;
@@ -17,19 +16,27 @@ public class Ball : MonoBehaviour, IThrowable
     [Space]
     [SerializeField] private string _backboardTag = "BackBoard";
     [SerializeField] private string _ringTag = "Ring";
+    [Space]
+    [SerializeField] private FireBallModule _fireballModule;
     public float Radius => _collider.radius;
+
+    public void Setup(bool isOwner)
+    {
+        _fireballModule.Setup(isOwner);
+    }
 
     public void ResetThrowable(Transform resetPos)
     {
-        gameObject.SetActive(false);
+        _renderer.enabled = false;
         transform.position = resetPos.position;
     }
 
     public async UniTask<bool> SimulateThrow(ThrowStep[] steps, IControlThrower thrower)
     {
-        gameObject.SetActive(true);
-        _ballOnFireEffect.SetActive(thrower.FireballModule.OnFire);
-        _renderer.material = thrower.FireballModule.OnFire ? _onFireMaterial : _normalMaterial;
+        _renderer.enabled = true;
+        bool onFire = _fireballModule.OnFire;
+        _ballOnFireEffect.SetActive(onFire);
+        _renderer.material = onFire ? _onFireMaterial : _normalMaterial;
         bool bbHit = false;
         bool ringHit = false;
         bool scored = false;
@@ -48,37 +55,37 @@ public class Ball : MonoBehaviour, IThrowable
             }
             if (step.Scored)
             {
-                AddScore(bbHit, ringHit, thrower);
+                AddScore(bbHit, ringHit, thrower, onFire);
                 step.BasketObject.PlayBasketEffects(!bbHit && !ringHit);
                 scored = true;
             }
             await UniTask.Yield(PlayerLoopTiming.FixedUpdate, gameObject.GetCancellationTokenOnDestroy());
         }
-        if (thrower.FireballModule != null && !scored)
+        if (_fireballModule != null && !scored)
         {
-            thrower.FireballModule.ResetFireBall();
+            _fireballModule.ResetFireBall();
         }
         return scored;
     }
 
-    private void AddScore(bool bbHit, bool ringHit, IControlThrower player)
+    private void AddScore(bool bbHit, bool ringHit, IControlThrower player, bool onFire)
     {
         if(player == null) { return; }
         if (bbHit) 
         { 
-            player.ScoredPoints(ScoreCategory.BB); 
+            player.ScoredPoints(ScoreCategory.BB, onFire); 
         }
         else if (ringHit) 
         { 
-            player.ScoredPoints(ScoreCategory.Normal); 
+            player.ScoredPoints(ScoreCategory.Normal, onFire); 
         }
         else
         {
-            player.ScoredPoints(ScoreCategory.Clean);
+            player.ScoredPoints(ScoreCategory.Clean, onFire);
         }
-        if (player.FireballModule != null)
+        if (_fireballModule != null)
         {
-            player.FireballModule.AddToFireBall();
+            _fireballModule.AddToFireBall();
         }
 
     }
@@ -88,24 +95,20 @@ public class Ball : MonoBehaviour, IThrowable
         bbHit = false;
         ringHit = false;
         if (collision == null) { return; }
+        _audioSource.clip = _impact;
         if (collision.CompareTag(_backboardTag))
         {
             Debug.Log("Backboard hit!");
-            _audioSource.clip = _bbImpact;
-            _audioSource.Play();
+            BackboardEffects bbEffects = collision.GetComponent<BackboardEffects>();
+            bbEffects.BackboardHit();
             bbHit = true;
         }
         else if (collision.CompareTag(_ringTag))
         {
             Debug.Log("Ring hit!");
             _audioSource.clip = _ringImpact;
-            _audioSource.Play();
             ringHit = true;
         }
-        else
-        {
-            _audioSource.clip = _impact;
-            _audioSource.Play();
-        }
+        _audioSource.Play();
     }
 }

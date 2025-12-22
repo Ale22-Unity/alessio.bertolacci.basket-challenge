@@ -16,7 +16,6 @@ public class AIControl : MonoBehaviour, IControlThrower
     private UniTask _throw;
     public bool IsOwner => false;
     public bool CanThrow => _gameManager.GameStarted;
-    public FireBallModule FireballModule => _fireballModule;
 
     private void Start()
     {
@@ -30,11 +29,11 @@ public class AIControl : MonoBehaviour, IControlThrower
         return WaitingThrow;
     }
 
-    public void ScoredPoints(ScoreCategory score)
+    public void ScoredPoints(ScoreCategory score, bool onFire)
     {
         if (_gameManager != null)
         {
-            _gameManager.AddScore(score, this, _thrower.BallCameraTarget.position);
+            _gameManager.AddScore(score, this, onFire, _thrower.BallCameraTarget.position);
         }
     }
 

@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public int AddScore(ScoreCategory category, IControlThrower player, Vector3 ballPos)
+    public int AddScore(ScoreCategory category, IControlThrower player, bool onFire, Vector3 ballPos)
     {
         PlayerData data = _playerData.FirstOrDefault((p) => p.Player == player);
         if(data == null) { return 0; }
@@ -48,7 +48,6 @@ public class GameManager : MonoBehaviour
         {
             scoreAdded = BBBonusManager.ActiveBBBonusData.ScoreBonus;
         }
-        bool onFire = player.FireballModule.OnFire;
         scoreAdded = onFire ? scoreAdded *= 2 : scoreAdded;
         data.AddScore(scoreAdded);
         if (GameClient.Client != null)

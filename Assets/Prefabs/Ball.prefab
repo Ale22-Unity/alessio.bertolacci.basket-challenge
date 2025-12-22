@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7364198988159916221}
   - component: {fileID: 5565470563717616239}
   - component: {fileID: 7463574507708550183}
+  - component: {fileID: 5366429972051412920}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Untagged
@@ -71,7 +72,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _audioSource: {fileID: 7463574507708550183}
   _impact: {fileID: 8300000, guid: b80629aebbe17a4458dce0551a8211bb, type: 3}
-  _bbImpact: {fileID: 8300000, guid: b8c1a86cc97a35c44bc7cb081aa5089b, type: 3}
   _ringImpact: {fileID: 8300000, guid: 80b2710effe75b84fac881c03db96b30, type: 3}
   _ballOnFireEffect: {fileID: 5863751757259242986}
   _renderer: {fileID: 1857723324843435280}
@@ -80,6 +80,7 @@ MonoBehaviour:
   _collider: {fileID: 7364198988159916221}
   _backboardTag: BackBoard
   _ringTag: Ring
+  _fireballModule: {fileID: 5366429972051412920}
 --- !u!82 &7463574507708550183
 AudioSource:
   m_ObjectHideFlags: 0
@@ -176,6 +177,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5366429972051412920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1244856448781318982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50dac9a95f7b29d498cad005412e1f1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _consecutiveThrowsAmount: 4
+  _fireballDuration: 16
 --- !u!1001 &1010600876926220692
 PrefabInstance:
   m_ObjectHideFlags: 0
