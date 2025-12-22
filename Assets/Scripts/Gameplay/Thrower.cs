@@ -8,6 +8,7 @@ public class Thrower : MonoBehaviour
     [SerializeField] private Transform _target;
     [SerializeField] private Transform _throwPos;
     [SerializeField] private Ball _ball;
+    [SerializeField] private CharacterAnimations _characterAnimations;
     [Space]
     [SerializeField] private int _maxSimulatedSteps = 1000;
     [SerializeField] private LayerMask _simulatedCollisionMask;
@@ -235,6 +236,11 @@ public class Thrower : MonoBehaviour
         {
             dir = _assignedPos.BBThrow.Direction;
         }
+        if(_characterAnimations != null)
+        {
+            await _characterAnimations.WaitShootBallAnimation();
+        }
+        _controller.SetCameraToThrowTarget();
         bool scored = await _ball.SimulateThrow(SimulateThrow(dir, throwSpeed, 0.01f), _controller);
         _activeSimulation = false;
     }

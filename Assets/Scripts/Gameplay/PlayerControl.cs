@@ -68,14 +68,18 @@ public class PlayerControl : MonoBehaviour, IControlThrower
     {
         if (!_validSwipe) { return; }
         _waitingThrow = true;
-        if (GameClient.Client != null)
-        {
-            GameClient.Client.GameCamera.SetTarget(_cameraTargetThrow, _thrower.BallCameraTarget, _cameraRotSpeed, _cameraMoveSpeed);
-        }
         await _thrower.ThrowFromInput(perc, _errorMarginPerc);
         _gameManager.AssignThrowerToRandomPos(this);
         _thrower.ResetBall();
         _waitingThrow = false;
+    }
+
+    public void SetCameraToThrowTarget()
+    {
+        if (GameClient.Client != null)
+        {
+            GameClient.Client.GameCamera.SetTarget(_cameraTargetThrow, _thrower.BallCameraTarget, _cameraRotSpeed, _cameraMoveSpeed);
+        }
     }
 
     public bool TryAssignThrowerToPos(ThrowPosition position)

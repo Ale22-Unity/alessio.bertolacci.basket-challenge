@@ -60,4 +60,9 @@ public class AIControl : MonoBehaviour, IControlThrower
         _thrower.ResetBall();
         WaitingThrow = false;
     }
+
+    public void SetCameraToThrowTarget()
+    {
+
+    }
 }

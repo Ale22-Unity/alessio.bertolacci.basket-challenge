@@ -12,11 +12,13 @@ public class Ball : MonoBehaviour, IThrowable
 
     public void ResetThrowable(Transform resetPos)
     {
+        gameObject.SetActive(false);
         transform.position = resetPos.position;
     }
 
     public async UniTask<bool> SimulateThrow(ThrowStep[] steps, IControlThrower thrower)
     {
+        gameObject.SetActive(true);
         _ballOnFireEffect.SetActive(thrower.FireballModule.OnFire);
         _renderer.material = thrower.FireballModule.OnFire ? _onFireMaterial : _normalMaterial;
         bool bbHit = false;
