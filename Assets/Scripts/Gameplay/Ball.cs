@@ -1,13 +1,22 @@
 using Cysharp.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Ball : MonoBehaviour, IThrowable
 {
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip _impact;
+    [SerializeField] private AudioClip _bbImpact;
+    [SerializeField] private AudioClip _ringImpact;
+    [Space]
     [SerializeField] private GameObject _ballOnFireEffect;
     [SerializeField] private MeshRenderer _renderer;
     [SerializeField] private Material _onFireMaterial;
     [SerializeField] private Material _normalMaterial;
     [SerializeField] private SphereCollider _collider;
+    [Space]
+    [SerializeField] private string _backboardTag = "BackBoard";
+    [SerializeField] private string _ringTag = "Ring";
     public float Radius => _collider.radius;
 
     public void ResetThrowable(Transform resetPos)
@@ -28,17 +37,19 @@ public class Ball : MonoBehaviour, IThrowable
         foreach(ThrowStep step in steps)
         {
             transform.position = step.TargetPos;
-            if (step.HitCategory == HitCategory.Backboard)
+            EvaluateCollision(step.HitObject, out bool bbHitStep, out bool ringHitStep);
+            if (bbHitStep)
             {
                 bbHit = true;
             }
-            else if (step.HitCategory == HitCategory.Ring)
+            else if (ringHitStep)
             {
                 ringHit = true;
             }
             if (step.Scored)
             {
                 AddScore(bbHit, ringHit, thrower);
+                step.BasketObject.PlayBasketEffects(!bbHit && !ringHit);
                 scored = true;
             }
             await UniTask.Yield(PlayerLoopTiming.FixedUpdate, gameObject.GetCancellationTokenOnDestroy());
@@ -70,5 +81,31 @@ public class Ball : MonoBehaviour, IThrowable
             player.FireballModule.AddToFireBall();
         }
 
+    }
+
+    private void EvaluateCollision(GameObject collision, out bool bbHit, out bool ringHit)
+    {
+        bbHit = false;
+        ringHit = false;
+        if (collision == null) { return; }
+        if (collision.CompareTag(_backboardTag))
+        {
+            Debug.Log("Backboard hit!");
+            _audioSource.clip = _bbImpact;
+            _audioSource.Play();
+            bbHit = true;
+        }
+        else if (collision.CompareTag(_ringTag))
+        {
+            Debug.Log("Ring hit!");
+            _audioSource.clip = _ringImpact;
+            _audioSource.Play();
+            ringHit = true;
+        }
+        else
+        {
+            _audioSource.clip = _impact;
+            _audioSource.Play();
+        }
     }
 }

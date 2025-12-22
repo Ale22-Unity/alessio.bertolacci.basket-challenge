@@ -14,6 +14,8 @@ public class CharacterAnimations : MonoBehaviour
     [SerializeField] private string _shootAnimName = "";
     [Space]
     [SerializeField] private string _shootTriggerName = "";
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip _throwClip;
 
     private void Awake()
     {
@@ -44,5 +46,7 @@ public class CharacterAnimations : MonoBehaviour
     {
         _anim.SetTrigger(_shootTriggerName);
         await this.WaitForAnimationCompletion(_shootAnimName, _anim);
+        _audioSource.clip = _throwClip;
+        _audioSource.Play();
     }
 }

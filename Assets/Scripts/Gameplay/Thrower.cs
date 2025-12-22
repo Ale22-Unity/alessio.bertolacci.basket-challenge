@@ -16,8 +16,6 @@ public class Thrower : MonoBehaviour
     [SerializeField] private float _simulatedFriction = 0.1f;
     [SerializeField] private float _basketSpeedReduction = 0.35f;
     [Space]
-    [SerializeField] private string _backboardTag = "BackBoard";
-    [SerializeField] private string _ringTag = "Ring";
     [SerializeField] private LayerMask _basketLayer;
     [Space]
     [SerializeField] private ThrowPosition _assignedPos;
@@ -120,7 +118,7 @@ public class Thrower : MonoBehaviour
                     bounced = true;
                     Vector3 ballPosAtImpact = stepPos + (stepVelocity.normalized * hit.distance);
                     Debug.DrawLine(stepPos, ballPosAtImpact, Color.blue, duration);
-                    bool scored = CheckForBasket(stepPos, ballPosAtImpact);
+                    bool scored = CheckForBasket(stepPos, ballPosAtImpact, out BasketEffects basketObj);
                     stepPos = ballPosAtImpact;
                     float timeOfImpact = _accountedTimeStep * (hit.distance / deltaPos.magnitude);
                     _accountedTimeStep -= timeOfImpact;
@@ -128,16 +126,16 @@ public class Thrower : MonoBehaviour
                     Vector3 projectedDir = Vector3.Project(velocityAtImpact, hit.normal);
                     Vector3 bounceSpeed = ((1f - _simulatedFriction) * (velocityAtImpact - projectedDir)) + (colliderElasticity * _simulatedElasticlty * -projectedDir);
                     dir = scored ? (bounceSpeed * _basketSpeedReduction) : bounceSpeed;
-                    steps[i] = new ThrowStep(ballPosAtImpact, scored, GetHitCategory(hit.collider.gameObject));
+                    steps[i] = new ThrowStep(ballPosAtImpact, scored, hit.collider.gameObject, basketObj);
                     i++;
                 }
                 else
                 {
                     Debug.DrawLine(stepPos, stepPos + deltaPos, bounced? Color.green : Color.red, duration);
-                    bool scored = CheckForBasket(stepPos, stepPos + deltaPos);
+                    bool scored = CheckForBasket(stepPos, stepPos + deltaPos, out BasketEffects basketObj);
                     stepPos += deltaPos;
                     dir = scored ? (stepVelocity * _basketSpeedReduction) : stepVelocity;
-                    steps[i] = new ThrowStep(stepPos, scored, HitCategory.None);
+                    steps[i] = new ThrowStep(stepPos, scored, null, basketObj);
                     _accountedTimeStep = 0;
                     i++;
                 }
@@ -146,38 +144,22 @@ public class Thrower : MonoBehaviour
         return steps;
     }
 
-    public async UniTask PlayOutThrow()
+    private bool CheckForBasket(Vector3 startPos, Vector3 endPos, out BasketEffects basketObject)
     {
-        CalculatePathWithFixedHeight(_throwPos, _target, _deltaH, out Vector3 dir, out float v0);
-        await _ball.SimulateThrow(SimulateThrow(dir, v0, 0.01f), _controller);
-    }
-
-    private bool CheckForBasket(Vector3 startPos, Vector3 endPos)
-    {
-        if (Physics.Linecast(startPos, endPos, _basketLayer, QueryTriggerInteraction.Collide))
+        basketObject = null;
+        if (Physics.Linecast(startPos, endPos, out RaycastHit hit, _basketLayer, QueryTriggerInteraction.Collide))
         {
+            basketObject = hit.collider.gameObject.GetComponent<BasketEffects>();
             Debug.Log("Scored basket!");
             return true;
         }
         return false;
     }
 
-    private HitCategory GetHitCategory(GameObject collision)
+    public async UniTask PlayOutThrow()
     {
-        if (collision.CompareTag(_backboardTag))
-        {
-            Debug.Log("Backboard hit!");
-            return HitCategory.Backboard;
-        }
-        if (collision.CompareTag(_ringTag))
-        {
-            Debug.Log("Ring hit!");
-            return HitCategory.Ring;
-        }
-        else
-        {
-            return HitCategory.Default;
-        }
+        CalculatePathWithFixedHeight(_throwPos, _target, _deltaH, out Vector3 dir, out float v0);
+        await _ball.SimulateThrow(SimulateThrow(dir, v0, 0.01f), _controller);
     }
 
     public async UniTask StartDynamicSimulation()

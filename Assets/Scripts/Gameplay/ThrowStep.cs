@@ -4,20 +4,14 @@ public readonly struct ThrowStep
 {
     public readonly Vector3 TargetPos;
     public readonly bool Scored;
-    public readonly HitCategory HitCategory;
+    public readonly BasketEffects BasketObject;
+    public readonly GameObject HitObject;
 
-    public ThrowStep(Vector3 targetPos, bool scored, HitCategory hitCategory)
+    public ThrowStep(Vector3 targetPos, bool scored, GameObject hitObject, BasketEffects basketObject)
     {
         TargetPos = targetPos;
         Scored = scored;
-        HitCategory = hitCategory;
+        HitObject = hitObject;
+        BasketObject = basketObject;
     }
-}
-
-public enum HitCategory
-{
-    None = 0,
-    Backboard = 1,
-    Ring = 2,
-    Default = 3
 }
