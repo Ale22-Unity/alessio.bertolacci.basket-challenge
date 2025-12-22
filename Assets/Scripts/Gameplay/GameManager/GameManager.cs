@@ -85,9 +85,10 @@ public class GameManager : MonoBehaviour
         if(GameClient.Client != null)
         {
             PlayerResult[] results = new PlayerResult[2];
+            _playerData = _playerData.OrderByDescending((e) => e.Score).ToList();
             for (int i = 0; i < _playerData.Count; i++)
             {
-                results[i] = _playerData[i].GetPlayerResult();
+                results[i] = _playerData[i].GetPlayerResult(i == 0);
             }
             GameClient.Client.EventBus.Fire<GameEndedEvent>(new GameEndedEvent(results));
         }

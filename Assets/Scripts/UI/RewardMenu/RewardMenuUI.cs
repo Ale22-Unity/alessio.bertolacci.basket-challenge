@@ -41,7 +41,7 @@ public class RewardMenuUI : MonoBehaviour, IMenuUI
             _playAgainBt.onClick.AddListener(() => rewardMenuData.RestartGame().Forget());
             _quitBt.onClick.RemoveAllListeners();
             _quitBt.onClick.AddListener(() => rewardMenuData.QuitGame());
-            SetupPlayerInfo(rewardMenuData.Results.ToList()).Forget();
+            SetupPlayerInfo(rewardMenuData.Results).Forget();
         }
     }
 
@@ -68,11 +68,10 @@ public class RewardMenuUI : MonoBehaviour, IMenuUI
         }
     }
 
-    private async UniTask SetupPlayerInfo(List<PlayerResult> results)
+    private async UniTask SetupPlayerInfo(PlayerResult[] results)
     {
-        results = results.OrderByDescending((e) => e.Score).ToList();
-        _ownerElement.SetWinner(results[0].IsOwner, results);
-        _remoteElement.SetWinner(!results[0].IsOwner, results);
+        _ownerElement.SetWinner(results);
+        _remoteElement.SetWinner(results);
         _winner = results[0].IsOwner ? _ownerElement : _remoteElement;
         await PlayRewardAnimation();
         await _moneyPanelAnimations.Close();

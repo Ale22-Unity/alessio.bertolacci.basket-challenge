@@ -17,8 +17,8 @@ public class PlayerData
         Score += amount;
     }
 
-    public PlayerResult GetPlayerResult()
+    public PlayerResult GetPlayerResult(bool winner)
     {
-        return new PlayerResult(Score, Player.IsOwner);
+        return new PlayerResult(Score, Player.IsOwner, winner);
     }
 }

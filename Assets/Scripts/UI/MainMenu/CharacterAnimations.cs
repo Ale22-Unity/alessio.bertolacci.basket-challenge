@@ -1,10 +1,12 @@
 using Cysharp.Threading.Tasks;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterAnimations : MonoBehaviour
 {
+    [SerializeField] private bool _isOwner;
     [SerializeField] private Animator _anim;
     [SerializeField] private string _startingAnimName = "";
     [Space]
@@ -23,13 +25,37 @@ public class CharacterAnimations : MonoBehaviour
         {
             _anim.Play(_startingAnimName);
         }
+        if(GameClient.Client != null)
+        {
+            GameClient.Client.EventBus.Subscribe<SetupRewardScreenCharactersEvent>(On);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (GameClient.Client != null)
+        {
+            GameClient.Client.EventBus.Unsubscribe<SetupRewardScreenCharactersEvent>(On);
+        }
+    }
+
+    private void On(SetupRewardScreenCharactersEvent e)
+    {
+        foreach(PlayerResult result in e.Results)
+        {
+            if(result.IsOwner == _isOwner)
+            {
+                SetWinAnimation(result.Winner);
+                return;
+            }
+        }
     }
 
     public void SetWinAnimation(bool winner)
     {
         if (!string.IsNullOrEmpty(_winAnimName) && !string.IsNullOrEmpty(_loseAnimName))
         {
-            string animToPlay = winner ? _winAnimName : _startingAnimName;
+            string animToPlay = winner ? _winAnimName : _loseAnimName;
             _anim.Play(animToPlay);
         }
     }
