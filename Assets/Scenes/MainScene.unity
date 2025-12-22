@@ -698,7 +698,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxSwipeDurationSec: 1
-  _screenMutiplier: 0.5
+  _screenMutiplier: 0.8
 --- !u!4 &482509868
 Transform:
   m_ObjectHideFlags: 0

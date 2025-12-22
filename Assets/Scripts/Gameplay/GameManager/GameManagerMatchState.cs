@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameManagerMatchState : BaseState<GameManagerStates, GameManager>
 {
+    private bool _tickingSet = false;
+
     public GameManagerMatchState(GameManagerStates key, GameManager ctx) : base(key, ctx)
     {
     }
@@ -32,6 +34,11 @@ public class GameManagerMatchState : BaseState<GameManagerStates, GameManager>
     {
         _ctx.MatchTimer.UpdateTimer(Time.deltaTime);
         _ctx.BBBonusManager.UpdateBBBonus();
+        if(_ctx.MatchTimer.InvertedTimer < _ctx.LastSeconds && !_tickingSet)
+        {
+            _tickingSet = true;
+            _ctx.SetTickingTimer(true);
+        }
     }
 
     public override GameManagerStates GetNextState()

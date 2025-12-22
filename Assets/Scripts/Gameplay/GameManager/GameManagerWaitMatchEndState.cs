@@ -9,6 +9,8 @@ public class GameManagerWaitMatchEndState : BaseState<GameManagerStates, GameMan
 
     public override void EnterState()
     {
+        _ctx.PlayEndGameHorn();
+        _ctx.SetTickingTimer(false);
         WaitEndGame().Forget();
     }
 

@@ -12,7 +12,11 @@ public class GameManager : MonoBehaviour
     [field: SerializeField] public BackboardBonusManager BBBonusManager {  get; private set; }
     [field: SerializeField] public TimerData ReadyUpTimer { get; private set; }
     [field: SerializeField] public TimerData MatchTimer { get; private set; }
-
+    [field: SerializeField] public float LastSeconds { get; private set; } = 3f;
+    [Space]
+    [SerializeField] private AudioSource _cheeringAudioSource;
+    [SerializeField] private AudioSource _endGameHorn;
+    [SerializeField] private AudioSource _tickingTimer;
     public bool GameStarted => _stateFactory.GetCurrentState() == GameManagerStates.Match;
 
     private void Start()
@@ -55,6 +59,10 @@ public class GameManager : MonoBehaviour
             GameClient.Client.EventBus.Fire<ScoreAddedEvent>(
                 new ScoreAddedEvent(scoreAdded, data.Score, player.IsOwner, ballPos, onFire, category));
         }
+        if(player.IsOwner && _cheeringAudioSource != null)
+        {
+            _cheeringAudioSource.Play();
+        }
         return scoreAdded;
     }
 
@@ -83,6 +91,17 @@ public class GameManager : MonoBehaviour
             }
             GameClient.Client.EventBus.Fire<GameEndedEvent>(new GameEndedEvent(results));
         }
+    }
+
+    public void SetTickingTimer(bool active)
+    {
+        if (active) { _tickingTimer.Play(); }
+        else { _tickingTimer.Stop(); }
+    }
+
+    public void PlayEndGameHorn()
+    {
+        _endGameHorn.Play();
     }
 }
 
