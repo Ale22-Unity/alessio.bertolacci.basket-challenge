@@ -25,6 +25,7 @@ public class RewardMenuUI : MonoBehaviour, IMenuUI
     [SerializeField] private RectTransform _moneyPanel;
     [SerializeField] private UIBasePanelAnimations _moneyPanelAnimations;
     [SerializeField] private UIBasePanelAnimations _buttonsAnimations;
+    [SerializeField] private AudioSource _moneyAudio;
     private PlayerRewardUI _winner;
     public IAnimatedPanel PanelAnimations => _panelAnimations;
     public MenuID MenuID => menuId;
@@ -54,6 +55,7 @@ public class RewardMenuUI : MonoBehaviour, IMenuUI
     {
         if(GameClient.Client != null)
         {
+            _moneyAudio.Play();
             ContextUIParticleData data = new ContextUIParticleData(
                 new ParticlesContextPosition((Vector2)_moneyPanel.position),
                 new ParticlesContextPosition((Vector2)_winner.RectTransform.position),
