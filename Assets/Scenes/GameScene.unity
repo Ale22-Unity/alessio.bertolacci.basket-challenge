@@ -148,7 +148,7 @@ Transform:
   m_GameObject: {fileID: 272489498}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -4.11}
+  m_LocalPosition: {x: 0, y: 0, z: -5.58}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -168,9 +168,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CleanTarget>k__BackingField: {fileID: 1911732301}
   <BBTarget>k__BackingField: {fileID: 563200402}
-  <MaxThrowSpeed>k__BackingField: 8.3
-  <MinThrowSpeed>k__BackingField: 7.6
-  <DeltaH>k__BackingField: 2
+  <SimulationSteps>k__BackingField: 100
+  <MaxThrowSpeed>k__BackingField: 9
+  <MinThrowSpeed>k__BackingField: 7.8
+  <DeltaH>k__BackingField: 1.5
   _currentThrower: {fileID: 0}
 --- !u!1 &279011401
 GameObject:
@@ -198,7 +199,7 @@ Transform:
   m_GameObject: {fileID: 279011401}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.36, y: 0, z: -3.44}
+  m_LocalPosition: {x: -2.59, y: 0, z: -2.08}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -218,22 +219,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CleanTarget>k__BackingField: {fileID: 1911732301}
   <BBTarget>k__BackingField: {fileID: 563200402}
-  <MaxThrowSpeed>k__BackingField: 8.3
-  <MinThrowSpeed>k__BackingField: 7.6
-  <DeltaH>k__BackingField: 2
-  _currentThrower: {fileID: 0}
---- !u!134 &293372978
-PhysicMaterial:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: CourtMaterial (Instance) (Instance) (Instance) (Instance) (Instance)
-  dynamicFriction: 0
-  staticFriction: 0
-  bounciness: 1
-  frictionCombine: 3
-  bounceCombine: 3
+  <SimulationSteps>k__BackingField: 100
+  <MaxThrowSpeed>k__BackingField: 7.8
+  <MinThrowSpeed>k__BackingField: 6.5
+  <DeltaH>k__BackingField: 1
+  _currentThrower: {fileID: 2034642711}
 --- !u!1 &336732161
 GameObject:
   m_ObjectHideFlags: 0
@@ -318,7 +308,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 6771bda4504969d4db3df0bf95c20a19, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -727,12 +717,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 563200401}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.59, z: 0.258}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: -1}
+  m_LocalPosition: {x: 0.007, y: -0.41700006, z: 0.344}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1841534435}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &585787183
 PrefabInstance:
@@ -892,18 +882,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 636010645}
   m_PrefabAsset: {fileID: 0}
---- !u!134 &726488324
-PhysicMaterial:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: RingMaterial (Instance) (Instance)
-  dynamicFriction: 0
-  staticFriction: 0
-  bounciness: 0.1
-  frictionCombine: 3
-  bounceCombine: 3
 --- !u!1 &758624268
 GameObject:
   m_ObjectHideFlags: 0
@@ -930,7 +908,7 @@ Transform:
   m_GameObject: {fileID: 758624268}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.11, y: 0, z: -4.05}
+  m_LocalPosition: {x: 1.89, y: 0, z: -3.04}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -950,9 +928,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CleanTarget>k__BackingField: {fileID: 1911732301}
   <BBTarget>k__BackingField: {fileID: 563200402}
-  <MaxThrowSpeed>k__BackingField: 8.3
-  <MinThrowSpeed>k__BackingField: 7.6
-  <DeltaH>k__BackingField: 2
+  <SimulationSteps>k__BackingField: 100
+  <MaxThrowSpeed>k__BackingField: 8
+  <MinThrowSpeed>k__BackingField: 7.3
+  <DeltaH>k__BackingField: 1.5
   _currentThrower: {fileID: 0}
 --- !u!1001 &772545424
 PrefabInstance:
@@ -1151,6 +1130,57 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &806018594
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 806018595}
+  - component: {fileID: 806018596}
+  m_Layer: 0
+  m_Name: ThrowPos_09
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &806018595
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806018594}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.08, y: 0, z: -2.41}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1516471261}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &806018596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806018594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77518ac009eb51c40a2e0dc76711118d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <CleanTarget>k__BackingField: {fileID: 1911732301}
+  <BBTarget>k__BackingField: {fileID: 563200402}
+  <SimulationSteps>k__BackingField: 100
+  <MaxThrowSpeed>k__BackingField: 8.6
+  <MinThrowSpeed>k__BackingField: 7.8
+  <DeltaH>k__BackingField: 1.5
+  _currentThrower: {fileID: 2034642711}
 --- !u!1 &844686081
 GameObject:
   m_ObjectHideFlags: 0
@@ -1213,7 +1243,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1218aea865c2c0a4da9dab138c6a11bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _deltaH: 2
   _target: {fileID: 1911732301}
   _throwPos: {fileID: 1937287342}
   _ball: {fileID: 1570842544}
@@ -1222,16 +1251,14 @@ MonoBehaviour:
   _simulatedCollisionMask:
     serializedVersion: 2
     m_Bits: 55
-  _simulatedElasticlty: 0.6
+  _simulatedElasticlty: 0.65
   _simulatedFriction: 0.2
   _basketSpeedReduction: 0.05
+  _randomDirFluctuation: 0.3
   _basketLayer:
     serializedVersion: 2
     m_Bits: 64
   _assignedPos: {fileID: 1517585561}
-  _maxSpeed: 11
-  _minSpeed: 10.5
-  _fireballModule: {fileID: 0}
 --- !u!4 &844686085
 Transform:
   m_ObjectHideFlags: 0
@@ -1241,7 +1268,7 @@ Transform:
   m_GameObject: {fileID: 844686081}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.36097383, z: -0, w: 0.93257594}
-  m_LocalPosition: {x: -1.89, y: 0, z: -3.32}
+  m_LocalPosition: {x: -1.9, y: 0, z: 5.1}
   m_LocalScale: {x: 0.8000001, y: 1, z: 0.8000001}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1276,7 +1303,7 @@ Transform:
   m_GameObject: {fileID: 928176768}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.1, y: 0, z: 11.99}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1498,7 +1525,7 @@ Transform:
   m_GameObject: {fileID: 1250261027}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.9, y: 0, z: -4.75}
+  m_LocalPosition: {x: 0.03, y: 0, z: -3.03}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1518,9 +1545,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CleanTarget>k__BackingField: {fileID: 1911732301}
   <BBTarget>k__BackingField: {fileID: 563200402}
-  <MaxThrowSpeed>k__BackingField: 8.3
-  <MinThrowSpeed>k__BackingField: 7.6
-  <DeltaH>k__BackingField: 2
+  <SimulationSteps>k__BackingField: 100
+  <MaxThrowSpeed>k__BackingField: 8
+  <MinThrowSpeed>k__BackingField: 6.8
+  <DeltaH>k__BackingField: 1.3
   _currentThrower: {fileID: 0}
 --- !u!1 &1252391700
 GameObject:
@@ -1562,7 +1590,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1252391700}
-  m_Material: {fileID: 293372978}
+  m_Material: {fileID: 1843063456}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1576,49 +1604,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 15.4, y: 0.3, z: 26.18}
   m_Center: {x: 0, y: -0.11, z: 0}
---- !u!1 &1303900356
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1303900357}
-  m_Layer: 0
-  m_Name: TestTargetPos
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1303900357
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1303900356}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.01, y: 2.659, z: 0.227}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!134 &1419703899
-PhysicMaterial:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: BackBoardMaterial (Instance) (Instance)
-  dynamicFriction: 0
-  staticFriction: 0
-  bounciness: 1
-  frictionCombine: 3
-  bounceCombine: 3
 --- !u!1 &1465929246
 GameObject:
   m_ObjectHideFlags: 0
@@ -1675,7 +1660,7 @@ Transform:
   m_GameObject: {fileID: 1516471260}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 10.04}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1688,6 +1673,7 @@ Transform:
   - {fileID: 758624269}
   - {fileID: 1517585560}
   - {fileID: 1813759436}
+  - {fileID: 806018595}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1517585559
@@ -1716,7 +1702,7 @@ Transform:
   m_GameObject: {fileID: 1517585559}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.36, y: 0, z: -3.44}
+  m_LocalPosition: {x: 3.55, y: 0, z: -4.29}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1736,10 +1722,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CleanTarget>k__BackingField: {fileID: 1911732301}
   <BBTarget>k__BackingField: {fileID: 563200402}
-  <MaxThrowSpeed>k__BackingField: 8.3
-  <MinThrowSpeed>k__BackingField: 7.6
-  <DeltaH>k__BackingField: 2
-  _currentThrower: {fileID: 2034642711}
+  <SimulationSteps>k__BackingField: 100
+  <MaxThrowSpeed>k__BackingField: 9
+  <MinThrowSpeed>k__BackingField: 7.5
+  <DeltaH>k__BackingField: 1.5
+  _currentThrower: {fileID: 0}
 --- !u!1001 &1570842543
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1820,6 +1807,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65979775465e2e846a92bca7d26527a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!134 &1604495157
+PhysicMaterial:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BackBoardMaterial (Instance) (Instance) (Instance) (Instance)
+  dynamicFriction: 0
+  staticFriction: 0
+  bounciness: 1
+  frictionCombine: 3
+  bounceCombine: 3
 --- !u!1 &1629511012
 GameObject:
   m_ObjectHideFlags: 0
@@ -1877,7 +1876,7 @@ Transform:
   m_GameObject: {fileID: 1629696466}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.9, y: 0, z: -4.23}
+  m_LocalPosition: {x: -1.88, y: 0, z: -3.04}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1897,9 +1896,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CleanTarget>k__BackingField: {fileID: 1911732301}
   <BBTarget>k__BackingField: {fileID: 563200402}
-  <MaxThrowSpeed>k__BackingField: 8.3
-  <MinThrowSpeed>k__BackingField: 7.6
-  <DeltaH>k__BackingField: 2
+  <SimulationSteps>k__BackingField: 100
+  <MaxThrowSpeed>k__BackingField: 8
+  <MinThrowSpeed>k__BackingField: 7.3
+  <DeltaH>k__BackingField: 1.5
   _currentThrower: {fileID: 0}
 --- !u!1 &1653286319
 GameObject:
@@ -1969,14 +1969,17 @@ MonoBehaviour:
   - {fileID: 758624270}
   - {fileID: 1517585561}
   - {fileID: 1813759437}
+  - {fileID: 806018596}
   <BBBonusManager>k__BackingField: {fileID: 1653286323}
   <ReadyUpTimer>k__BackingField:
     <TimerDurationS>k__BackingField: 3
     _currentTimer: 0
   <MatchTimer>k__BackingField:
-    <TimerDurationS>k__BackingField: 12
+    <TimerDurationS>k__BackingField: 120
     _currentTimer: 0
   <LastSeconds>k__BackingField: 3
+  _editorTestPosition: 1
+  _editorTestThrower: {fileID: 2034642712}
   _cheeringAudioSource: {fileID: 1653286324}
   _endGameHorn: {fileID: 1887149312}
   _tickingTimer: {fileID: 495996820}
@@ -2007,15 +2010,15 @@ MonoBehaviour:
   _possibleBonuses:
   - <ScoreBonus>k__BackingField: 4
     <Weight>k__BackingField: 40
-    <Duration>k__BackingField: 4
+    <Duration>k__BackingField: 12
   - <ScoreBonus>k__BackingField: 6
     <Weight>k__BackingField: 20
-    <Duration>k__BackingField: 4
+    <Duration>k__BackingField: 12
   - <ScoreBonus>k__BackingField: 8
     <Weight>k__BackingField: 10
-    <Duration>k__BackingField: 4
-  MaxCooldown: 6
-  MinCooldown: 2
+    <Duration>k__BackingField: 12
+  MaxCooldown: 24
+  MinCooldown: 4
 --- !u!82 &1653286324
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2481,7 +2484,7 @@ Transform:
   m_GameObject: {fileID: 1813759435}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.99, y: 0, z: -2.44}
+  m_LocalPosition: {x: 2.45, y: 0, z: -2.03}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2501,9 +2504,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CleanTarget>k__BackingField: {fileID: 1911732301}
   <BBTarget>k__BackingField: {fileID: 563200402}
-  <MaxThrowSpeed>k__BackingField: 8.3
-  <MinThrowSpeed>k__BackingField: 7.6
-  <DeltaH>k__BackingField: 2
+  <SimulationSteps>k__BackingField: 100
+  <MaxThrowSpeed>k__BackingField: 7.8
+  <MinThrowSpeed>k__BackingField: 6.5
+  <DeltaH>k__BackingField: 1
   _currentThrower: {fileID: 0}
 --- !u!1 &1841534434
 GameObject:
@@ -2541,6 +2545,7 @@ Transform:
   - {fileID: 1805522102}
   - {fileID: 1911732301}
   - {fileID: 772545425}
+  - {fileID: 563200402}
   m_Father: {fileID: 928176769}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!64 &1841534436
@@ -2550,7 +2555,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1841534434}
-  m_Material: {fileID: 1419703899}
+  m_Material: {fileID: 1604495157}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2831,6 +2836,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1842547443}
   m_CullTransparentMesh: 1
+--- !u!134 &1843063456
+PhysicMaterial:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: CourtMaterial (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance)
+  dynamicFriction: 0
+  staticFriction: 0
+  bounciness: 1
+  frictionCombine: 3
+  bounceCombine: 3
 --- !u!1 &1854055243
 GameObject:
   m_ObjectHideFlags: 0
@@ -2857,7 +2875,7 @@ Transform:
   m_GameObject: {fileID: 1854055243}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.99, y: 0, z: -2.44}
+  m_LocalPosition: {x: -5.05, y: 0, z: -2.44}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2877,9 +2895,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CleanTarget>k__BackingField: {fileID: 1911732301}
   <BBTarget>k__BackingField: {fileID: 563200402}
-  <MaxThrowSpeed>k__BackingField: 8.3
-  <MinThrowSpeed>k__BackingField: 7.6
-  <DeltaH>k__BackingField: 2
+  <SimulationSteps>k__BackingField: 100
+  <MaxThrowSpeed>k__BackingField: 8.6
+  <MinThrowSpeed>k__BackingField: 7.8
+  <DeltaH>k__BackingField: 1.5
   _currentThrower: {fileID: 0}
 --- !u!1 &1887149310
 GameObject:
@@ -3114,7 +3133,7 @@ Transform:
   m_GameObject: {fileID: 1896106538}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.11, y: 0, z: -4.05}
+  m_LocalPosition: {x: -3.56, y: 0, z: -4.26}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3134,9 +3153,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CleanTarget>k__BackingField: {fileID: 1911732301}
   <BBTarget>k__BackingField: {fileID: 563200402}
-  <MaxThrowSpeed>k__BackingField: 8.3
-  <MinThrowSpeed>k__BackingField: 7.6
-  <DeltaH>k__BackingField: 2
+  <SimulationSteps>k__BackingField: 100
+  <MaxThrowSpeed>k__BackingField: 9
+  <MinThrowSpeed>k__BackingField: 7.5
+  <DeltaH>k__BackingField: 1.5
   _currentThrower: {fileID: 0}
 --- !u!1 &1911732300
 GameObject:
@@ -3180,7 +3200,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1911732300}
-  m_Material: {fileID: 726488324}
+  m_Material: {fileID: 2053538232}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -3201,7 +3221,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1037383577177992976}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1037383577177992977}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 65979775465e2e846a92bca7d26527a8, type: 3}
@@ -3339,8 +3359,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2034642706}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.36097383, z: -0, w: 0.93257594}
-  m_LocalPosition: {x: 3.36, y: 0, z: -3.44}
+  m_LocalRotation: {x: 0, y: 0.27276644, z: 0, w: 0.9620803}
+  m_LocalPosition: {x: -2.59, y: 0, z: 7.96}
   m_LocalScale: {x: 0.8000001, y: 1, z: 0.8000001}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3362,7 +3382,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1218aea865c2c0a4da9dab138c6a11bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _deltaH: 2
   _target: {fileID: 1911732301}
   _throwPos: {fileID: 980833987}
   _ball: {fileID: 1924897615}
@@ -3371,16 +3390,14 @@ MonoBehaviour:
   _simulatedCollisionMask:
     serializedVersion: 2
     m_Bits: 55
-  _simulatedElasticlty: 0.6
+  _simulatedElasticlty: 0.65
   _simulatedFriction: 0.2
   _basketSpeedReduction: 0.05
+  _randomDirFluctuation: 0.3
   _basketLayer:
     serializedVersion: 2
     m_Bits: 64
-  _assignedPos: {fileID: 1517585561}
-  _maxSpeed: 11
-  _minSpeed: 10.5
-  _fireballModule: {fileID: 0}
+  _assignedPos: {fileID: 279011403}
 --- !u!114 &2034642712
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3397,9 +3414,21 @@ MonoBehaviour:
   _gameManager: {fileID: 1653286321}
   _cameraTarget: {fileID: 373387476}
   _cameraTargetThrow: {fileID: 1715212519}
-  _errorMarginPerc: 0.1
+  _errorMarginPerc: 0.05
   _cameraMoveSpeed: 2
   _cameraRotSpeed: 10
+--- !u!134 &2053538232
+PhysicMaterial:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: RingMaterial (Instance) (Instance) (Instance) (Instance)
+  dynamicFriction: 0
+  staticFriction: 0
+  bounciness: 0.1
+  frictionCombine: 3
+  bounceCombine: 3
 --- !u!1001 &2053880271
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3911,17 +3940,17 @@ PrefabInstance:
     - target: {fileID: 1947738442609918356, guid: 1f304d8928affbc41afbba4595cdf109,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.9876618
+      value: -0.08939267
       objectReference: {fileID: 0}
     - target: {fileID: 1947738442609918356, guid: 1f304d8928affbc41afbba4595cdf109,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.336569
+      value: 0.5480437
       objectReference: {fileID: 0}
     - target: {fileID: 1947738442609918356, guid: 1f304d8928affbc41afbba4595cdf109,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.1361265
+      value: -0.30410814
       objectReference: {fileID: 0}
     - target: {fileID: 1947738442609918356, guid: 1f304d8928affbc41afbba4595cdf109,
         type: 3}
@@ -3958,11 +3987,38 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5863751757259242986, guid: 1f304d8928affbc41afbba4595cdf109,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1244856448781318982, guid: 1f304d8928affbc41afbba4595cdf109,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1037383577177992978}
   m_SourcePrefab: {fileID: 100100000, guid: 1f304d8928affbc41afbba4595cdf109, type: 3}
+--- !u!1 &1037383577177992977 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1244856448781318982, guid: 1f304d8928affbc41afbba4595cdf109,
+    type: 3}
+  m_PrefabInstance: {fileID: 1037383577177992976}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1037383577177992978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1037383577177992977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4afdcb1cbadf954ba8b1cf465429e17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!64 &1169729706472716244
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -5905,8 +5961,6 @@ SceneRoots:
   - {fileID: 781410173}
   - {fileID: 1037383577177992976}
   - {fileID: 1570842543}
-  - {fileID: 1303900357}
-  - {fileID: 563200402}
   - {fileID: 2034642710}
   - {fileID: 844686085}
   - {fileID: 1516471261}

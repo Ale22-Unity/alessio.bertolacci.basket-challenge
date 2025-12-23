@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Thrower : MonoBehaviour
 {
-    [SerializeField] private float _deltaH = 5;
     [SerializeField] private Transform _target;
     [SerializeField] private Transform _throwPos;
     [SerializeField] private Ball _ball;
@@ -15,14 +14,11 @@ public class Thrower : MonoBehaviour
     [SerializeField] private float _simulatedElasticlty = 0.7f;
     [SerializeField] private float _simulatedFriction = 0.1f;
     [SerializeField] private float _basketSpeedReduction = 0.35f;
+    [SerializeField] private float _randomDirFluctuation = 0.5f;
     [Space]
     [SerializeField] private LayerMask _basketLayer;
-    [Space]
     [SerializeField] private ThrowPosition _assignedPos;
-    [SerializeField] private float _maxSpeed = 8;
-    [SerializeField] private float _minSpeed = 6;
-    [Space]
-    [SerializeField] private FireBallModule _fireballModule;
+
     private IControlThrower _controller;
     private bool _dynamicSimulation;
     private bool _activeSimulation;
@@ -32,23 +28,8 @@ public class Thrower : MonoBehaviour
     private void Awake()
     {
         _controller = gameObject.GetComponent<IControlThrower>();
-        if (_fireballModule != null) { _fireballModule.Setup(_controller.IsOwner); }
-        if (GameClient.Client != null)
-        {
-            GameClient.Client.EventBus.Subscribe<ThrowBallTestEvent>(On);
-            GameClient.Client.EventBus.Subscribe<ResetBallTestEvent>(On);
-        }
         _ball.Setup(_controller.IsOwner);
         _ball.ResetThrowable(_throwPos);
-    }
-
-    private void OnDestroy()
-    {
-        if (GameClient.Client != null)
-        {
-            GameClient.Client.EventBus.Unsubscribe<ThrowBallTestEvent>(On);
-            GameClient.Client.EventBus.Unsubscribe<ResetBallTestEvent>(On);
-        }
     }
 
     float QuadraticEquation(float a, float b, float c, float sign)
@@ -86,29 +67,18 @@ public class Thrower : MonoBehaviour
         fireDirection = (groundDir * (Mathf.Cos(angle) * v0)) + (Vector3.up * (Mathf.Sin(angle) * v0));
     }
 
-    private void On(ResetBallTestEvent e)
-    {
-        _ball.ResetThrowable(_throwPos);
-    }
-
-    private void On(ThrowBallTestEvent e)
-    {
-        CalculatePathWithFixedHeight(_throwPos, _target, _deltaH, out Vector3 dir, out float v0);
-        _ball.SimulateThrow(SimulateThrow(dir, v0, 0.01f), _controller).Forget();
-    }
-
-    public ThrowStep[] SimulateThrow(Vector3 startDirection, float v0, float duration)
+    public ThrowStep[] SimulateThrow(Vector3 startDirection, float v0, float duration, int maxSteps)
     {
         Vector3 dir = startDirection.normalized * v0;
-        ThrowStep[] steps = new ThrowStep[_maxSimulatedSteps];
+        ThrowStep[] steps = new ThrowStep[maxSteps];
         Debug.Log($"Throw speed is {v0}");
         Vector3 stepPos = _throwPos.position;
         int i = 0;
-        while(i < _maxSimulatedSteps)
+        while(i < maxSteps)
         {
             float _accountedTimeStep = Time.fixedDeltaTime;
             bool bounced = false;
-            while (_accountedTimeStep > 0 && i < _maxSimulatedSteps)
+            while (_accountedTimeStep > 0 && i < maxSteps)
             {
                 Vector3 stepVelocity = dir + Physics.gravity * _accountedTimeStep;
                 Vector3 deltaPos = (dir * _accountedTimeStep) + (0.5f * Physics.gravity * Mathf.Pow(_accountedTimeStep, 2));
@@ -151,25 +121,22 @@ public class Thrower : MonoBehaviour
         if (Physics.Linecast(startPos, endPos, out RaycastHit hit, _basketLayer, QueryTriggerInteraction.Collide))
         {
             basketObject = hit.collider.gameObject.GetComponent<BasketEffects>();
-            Debug.Log("Scored basket!");
             return true;
         }
         return false;
     }
 
-    public async UniTask PlayOutThrow()
-    {
-        CalculatePathWithFixedHeight(_throwPos, _target, _deltaH, out Vector3 dir, out float v0);
-        await _ball.SimulateThrow(SimulateThrow(dir, v0, 0.01f), _controller);
-    }
-
     public async UniTask StartDynamicSimulation()
     {
         _dynamicSimulation = true;
-        while (_dynamicSimulation)
+        while (_assignedPos != null && _dynamicSimulation)
         {
-            CalculatePathWithFixedHeight(_throwPos, _target, _deltaH, out Vector3 dir, out float v0);
-            SimulateThrow(dir, v0, 0.2f);
+            Vector3 dir = Vector3.zero;
+            float v0 = 0;
+            CalculatePathWithFixedHeight(_throwPos, _assignedPos.CleanTarget, _assignedPos.DeltaH, out dir, out v0);
+            SimulateThrow(dir, v0, 0.2f, _assignedPos.SimulationSteps);
+            CalculatePathWithFixedHeight(_throwPos, _assignedPos.BBTarget, _assignedPos.DeltaH, out dir, out v0);
+            SimulateThrow(dir, v0, 0.2f, _assignedPos.SimulationSteps);
             await Task.Delay(200);
         }
     }
@@ -205,26 +172,36 @@ public class Thrower : MonoBehaviour
         float deltaSpeed = _assignedPos.MaxThrowSpeed - _assignedPos.MinThrowSpeed;
         float speedError = deltaSpeed * errorMargin * 0.5f;
         float throwSpeed = _assignedPos.MinThrowSpeed + (deltaSpeed * throwPerc);
-        Vector3 dir = _assignedPos.PerfetThrow.Direction;
+        Vector3 dir = _assignedPos.BBThrow.Direction;
+        bool noFluctuation = false;
         if(Utils.BetweenValuesCheck(_assignedPos.PerfetThrow.Velocity - speedError, _assignedPos.PerfetThrow.Velocity + speedError, throwSpeed))
         {
             throwSpeed = _assignedPos.PerfetThrow.Velocity;
+            noFluctuation = true;
         }
         else if (Utils.BetweenValuesCheck(_assignedPos.BBThrow.Velocity - speedError, _assignedPos.BBThrow.Velocity + speedError, throwSpeed))
         {
             throwSpeed = _assignedPos.BBThrow.Velocity;
             dir = _assignedPos.BBThrow.Direction;
+            noFluctuation = true;
         }
-        if(throwSpeed > _assignedPos.BBThrow.Velocity + speedError)
+        if(throwSpeed < _assignedPos.PerfetThrow.Velocity + speedError)
         {
-            dir = _assignedPos.BBThrow.Direction;
+            dir = _assignedPos.PerfetThrow.Direction;
         }
-        if(_characterAnimations != null)
+        if (!noFluctuation)
+        {
+            float fx = Random.Range(-_randomDirFluctuation, _randomDirFluctuation);
+            float fy = Random.Range(-_randomDirFluctuation, _randomDirFluctuation);
+            float fz = Random.Range(-_randomDirFluctuation, _randomDirFluctuation);
+            dir += new Vector3(fx, fy, fz);
+        }
+        if (_characterAnimations != null)
         {
             await _characterAnimations.WaitShootBallAnimation();
         }
         _controller.SetCameraToThrowTarget();
-        bool scored = await _ball.SimulateThrow(SimulateThrow(dir, throwSpeed, 0.01f), _controller);
+        bool scored = await _ball.SimulateThrow(SimulateThrow(dir, throwSpeed, 0.01f, _assignedPos.SimulationSteps), _controller);
         _activeSimulation = false;
     }
 

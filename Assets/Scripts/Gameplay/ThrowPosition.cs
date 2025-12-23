@@ -6,6 +6,7 @@ public class ThrowPosition : MonoBehaviour
 {
     [field:SerializeField] public Transform CleanTarget {  get; private set; }
     [field:SerializeField] public Transform BBTarget {  get; private set; }
+    [field: SerializeField] public int SimulationSteps { get; private set; } = 150;
     [field: SerializeField] public float MaxThrowSpeed { get; private set; }
     [field: SerializeField] public float MinThrowSpeed { get; private set; }
     [field: SerializeField] public float DeltaH { get; private set; } = 2;

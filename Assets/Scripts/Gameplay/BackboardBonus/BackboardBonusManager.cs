@@ -34,7 +34,7 @@ public class BackboardBonusManager : MonoBehaviour
         int prev = 0;
         foreach (BackboardBonusData bbBonus in _possibleBonuses)
         {
-            if (Utils.BetweenValuesCheck(prev, bbBonus.Weight, selectedBonus))
+            if (Utils.BetweenValuesCheck(prev, prev + bbBonus.Weight, selectedBonus))
             {
                 return bbBonus;
             }

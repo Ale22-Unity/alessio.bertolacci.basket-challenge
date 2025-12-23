@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
     [field: SerializeField] public TimerData MatchTimer { get; private set; }
     [field: SerializeField] public float LastSeconds { get; private set; } = 3f;
     [Space]
+    [SerializeField] private int _editorTestPosition = 0;
+    [SerializeField] private PlayerControl _editorTestThrower;
+    [Space]
     [SerializeField] private AudioSource _cheeringAudioSource;
     [SerializeField] private AudioSource _endGameHorn;
     [SerializeField] private AudioSource _tickingTimer;
@@ -40,6 +43,13 @@ public class GameManager : MonoBehaviour
             int selectedPos = Random.Range(0, _throwPositions.Length); 
             assigned = thrower.TryAssignThrowerToPos(_throwPositions[selectedPos]);
         }
+    }
+
+    public void AssignPlayerToPosition()
+    {
+        if(_editorTestThrower == null) { return; }
+        int selectedPos = Mathf.Clamp(_editorTestPosition, 0, _throwPositions.Length);
+        _editorTestThrower.TryAssignThrowerToPos(_throwPositions[selectedPos]);
     }
 
     public int AddScore(ScoreCategory category, IControlThrower player, bool onFire, Vector3 ballPos)
