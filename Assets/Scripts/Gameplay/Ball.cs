@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour, IThrowable
 {
+    [SerializeField] private AudioSource _fireballAudioEffect;
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip _impact;
     [SerializeField] private AudioClip _ringImpact;
@@ -35,6 +36,10 @@ public class Ball : MonoBehaviour, IThrowable
     {
         _renderer.enabled = true;
         bool onFire = _fireballModule.OnFire;
+        if (onFire)
+        {
+            _fireballAudioEffect.Play();
+        }
         _ballOnFireEffect.SetActive(onFire);
         _renderer.material = onFire ? _onFireMaterial : _normalMaterial;
         bool bbHit = false;
@@ -64,6 +69,10 @@ public class Ball : MonoBehaviour, IThrowable
         if (_fireballModule != null && !scored)
         {
             _fireballModule.ResetFireBall();
+        }
+        if (onFire)
+        {
+            _fireballAudioEffect.Stop();
         }
         return scored;
     }

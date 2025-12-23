@@ -1247,7 +1247,6 @@ MonoBehaviour:
   _throwPos: {fileID: 1937287342}
   _ball: {fileID: 1570842544}
   _characterAnimations: {fileID: 2053880273}
-  _maxSimulatedSteps: 100
   _simulatedCollisionMask:
     serializedVersion: 2
     m_Bits: 55
@@ -1975,7 +1974,7 @@ MonoBehaviour:
     <TimerDurationS>k__BackingField: 3
     _currentTimer: 0
   <MatchTimer>k__BackingField:
-    <TimerDurationS>k__BackingField: 12
+    <TimerDurationS>k__BackingField: 120
     _currentTimer: 0
   <LastSeconds>k__BackingField: 3
   _editorTestPosition: 1
@@ -3386,7 +3385,6 @@ MonoBehaviour:
   _throwPos: {fileID: 980833987}
   _ball: {fileID: 1924897615}
   _characterAnimations: {fileID: 1705971655}
-  _maxSimulatedSteps: 100
   _simulatedCollisionMask:
     serializedVersion: 2
     m_Bits: 55

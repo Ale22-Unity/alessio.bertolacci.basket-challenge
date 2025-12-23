@@ -1,6 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +11,8 @@ public class FireBallBarUI : MonoBehaviour
     [Space]
     [SerializeField] private Image _filler;
     [SerializeField] private float _fillSpeed = 1;
+    [SerializeField] private Animator _anim;
+    [SerializeField] private string _inAnim = "In";
     private float _targetFillAmount;
     private bool _prevValue = false;
 
@@ -43,6 +43,7 @@ public class FireBallBarUI : MonoBehaviour
     private void On(SetFireballStatusEvent e)
     {
         _targetFillAmount = e.BarPercentage;
+        Debug.Log($"Set bar percentage = {e.BarPercentage}");
         if (_prevValue != e.Active)
         {
             SetOnFireGraphics(e.Active);
@@ -52,6 +53,10 @@ public class FireBallBarUI : MonoBehaviour
 
     private void SetOnFireGraphics(bool on)
     {
+        if (on)
+        {
+            _anim.Play(_inAnim);
+        }
         _fireballImage.gameObject.SetActive(on);
         _overlayImage.color = on ? _overlayColorFire : _overlayColorNormal;
     }

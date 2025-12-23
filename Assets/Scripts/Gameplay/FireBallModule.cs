@@ -6,6 +6,7 @@ public class FireBallModule : MonoBehaviour
 {
     [SerializeField] private int _consecutiveThrowsAmount = 5;
     [SerializeField] private float _fireballDuration = 8f;
+    [SerializeField] private AudioSource _fireballOutSource;
     private int _currentThrows = 0;
     private bool _onFire;
     private bool _isOwner;
@@ -42,6 +43,8 @@ public class FireBallModule : MonoBehaviour
         if (_fireballRoutine != null)
         {
             StopCoroutine(_fireballRoutine);
+            _fireballRoutine = null;
+            _fireballOutSource.Play();
         }
         _onFire = false;
         _currentThrows = 0;
