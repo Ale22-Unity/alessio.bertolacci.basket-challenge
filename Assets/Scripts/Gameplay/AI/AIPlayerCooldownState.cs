@@ -15,7 +15,6 @@ public class AIPlayerCooldownState : BaseState<AIPlayerStates, AIControl>
     {
         _targetCooldown = Random.Range(_ctx.MinCooldown, _ctx.MaxCooldown);
         _currentCooldown = 0;
-        Debug.Log($"Started cooldown of {_targetCooldown} sec");
     }
 
     public override void ExitState()

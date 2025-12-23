@@ -86,7 +86,6 @@ public class ShotPowerBar : MonoBehaviour
         float delta = e.Position.MaxThrowSpeed - e.Position.MinThrowSpeed;
         float perfectPerc = 1 -((e.Position.MaxThrowSpeed - e.Position.PerfetThrow.Velocity) / delta);
         float bbPerc = 1 -((e.Position.MaxThrowSpeed - e.Position.BBThrow.Velocity) / delta);
-        Debug.Log($"speeds are {e.Position.PerfetThrow} {e.Position.BBThrow}");
         DrawPowerRequirements(perfectPerc, bbPerc, e.ErrorMarginPerc);
     }
 }

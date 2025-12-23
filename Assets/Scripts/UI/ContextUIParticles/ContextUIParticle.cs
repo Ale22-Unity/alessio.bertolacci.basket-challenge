@@ -42,7 +42,6 @@ public class ContextUIParticle : MonoBehaviour
         Vector2 delta = new Vector2(Random.Range(-dataDelta.x, dataDelta.x), Random.Range(-dataDelta.y, dataDelta.y));
         Vector2 start = data.StartPos.ToScreenPos(_camera, _canvas, _parent) + delta;
         Vector2 end = data.EndPos.ToScreenPos(_camera, _canvas, _parent);
-        Debug.Log($"Start particle from {start} to {end}");
 
         while (elapsed < duration)
         {

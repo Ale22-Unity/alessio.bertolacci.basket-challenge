@@ -39,7 +39,6 @@ public class FireBallModule : MonoBehaviour
 
     public void ResetFireBall()
     {
-        Debug.Log("started fire ball");
         if (_fireballRoutine != null)
         {
             StopCoroutine(_fireballRoutine);
@@ -54,7 +53,6 @@ public class FireBallModule : MonoBehaviour
 
     private IEnumerator Fireball()
     {
-        Debug.Log("started fire ball");
         float _currentDuration = 0;
         while(_currentDuration < _fireballDuration)
         {

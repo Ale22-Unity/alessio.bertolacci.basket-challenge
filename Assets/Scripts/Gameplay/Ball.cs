@@ -98,14 +98,12 @@ public class Ball : MonoBehaviour, IThrowable
         _audioSource.clip = _impact;
         if (collision.CompareTag(_backboardTag))
         {
-            Debug.Log("Backboard hit!");
             BackboardEffects bbEffects = collision.GetComponent<BackboardEffects>();
             bbEffects.BackboardHit();
             bbHit = true;
         }
         else if (collision.CompareTag(_ringTag))
         {
-            Debug.Log("Ring hit!");
             _audioSource.clip = _ringImpact;
             ringHit = true;
         }

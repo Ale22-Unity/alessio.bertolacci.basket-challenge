@@ -9,7 +9,6 @@ public class Thrower : MonoBehaviour
     [SerializeField] private Ball _ball;
     [SerializeField] private CharacterAnimations _characterAnimations;
     [Space]
-    [SerializeField] private int _maxSimulatedSteps = 1000;
     [SerializeField] private LayerMask _simulatedCollisionMask;
     [SerializeField] private float _simulatedElasticlty = 0.7f;
     [SerializeField] private float _simulatedFriction = 0.1f;

@@ -17,6 +17,8 @@ public class GameClient : MonoBehaviour
     [SerializeField] private MainMenuUI mainMenuPrefab;
     [SerializeField] private GameHUD gameHUDPrefab;
     [SerializeField] private RewardMenuUI rewardMenuPrefab;
+    [Space]
+    [SerializeField] private LoadingScreen _loadingSreenInstance;
 
     private List<IMenuUI> activeMenuItems = new List<IMenuUI>();
 
@@ -34,7 +36,7 @@ public class GameClient : MonoBehaviour
         Client = this;
         EventBus = new EventBus();
         EventBus.Subscribe<GameEndedEvent>(On);
-        CreateMainMenu().Forget();
+        InitializeGameMainMenu().Forget();
     }
 
     private void OnDestroy()
@@ -50,6 +52,7 @@ public class GameClient : MonoBehaviour
 
     private async UniTask StartGame()
     {
+        await _loadingSreenInstance.Animations.Open();
         if (_rewardSceneLoaded)
         {
             await SceneManager.UnloadSceneAsync(RewardSceneName);
@@ -67,6 +70,7 @@ public class GameClient : MonoBehaviour
         activeMenuItems.Add(gameHUDInstance);
         await gameHUDInstance.PanelAnimations.Open();
         await SceneManager.LoadSceneAsync(GameSceneName, LoadSceneMode.Additive);
+        await _loadingSreenInstance.Animations.Close();
         _gameSceneLoaded = true;
     }
     private void On(GameEndedEvent e)
@@ -76,6 +80,7 @@ public class GameClient : MonoBehaviour
 
     private async UniTask OnGameEnded(GameEndedEvent e)
     {
+        await _loadingSreenInstance.Animations.Open();
         if (_gameSceneLoaded)
         {
             await CloseMenu(MenuID.HUD);
@@ -88,6 +93,7 @@ public class GameClient : MonoBehaviour
         rewardMenuInstance.Setup(new RewardMenuUIData(StartGame, BackToMainMenu, QuitGame, e.MatchResults));
         activeMenuItems.Add(rewardMenuInstance);
         await rewardMenuInstance.PanelAnimations.Open();
+        await _loadingSreenInstance.Animations.Close();
         _rewardSceneLoaded = true;
     }
 
@@ -103,6 +109,7 @@ public class GameClient : MonoBehaviour
 
     private async UniTask BackToMainMenu()
     {
+        await _loadingSreenInstance.Animations.Open();
         if (_gameSceneLoaded)
         {
             await CloseMenu(MenuID.HUD);
@@ -116,6 +123,14 @@ public class GameClient : MonoBehaviour
             _rewardSceneLoaded = false;
         }
         await CreateMainMenu();
+        await _loadingSreenInstance.Animations.Close();
+    }
+
+    private async UniTask InitializeGameMainMenu()
+    {
+        _loadingSreenInstance.Animations.SetOpenImmediately();
+        await CreateMainMenu();
+        await _loadingSreenInstance.Animations.Close();
     }
 
     private async UniTask CloseMenu(MenuID ID)
